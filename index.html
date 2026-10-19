@@ -1,0 +1,3211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>🏆 POKI SPORTS ARENA SMKN 6 - 6 GAMES LENGKAP</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Plus+Jakarta+Sans:wght@600;700;800;900&display=swap');
+
+    :root {
+      --primary: #ff4757;
+      --secondary: #2ed573;
+      --accent: #ffa502;
+      --dark: #0f141d;
+      --jersey-color: #8e44ad;
+      --jersey-accent: #00cec9;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    body {
+      background: #090d16;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    #game-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      height: 100vh;
+      max-height: 840px;
+      background: #111;
+      overflow: hidden;
+      box-shadow: 0 12px 50px rgba(0,0,0,0.85);
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 500px) {
+      #game-wrapper {
+        border-radius: 28px;
+        height: 94vh;
+        border: 4px solid #2f3542;
+      }
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: #1e272e;
+      touch-action: none;
+    }
+
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      text-align: center;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(10px);
+      z-index: 20;
+      transition: opacity 0.25s ease;
+      overflow-y: auto;
+    }
+
+    .screen.hidden {
+      display: none !important;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .badge-top {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      color: #ffd32a;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    h1.game-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 26px;
+      line-height: 1.1;
+      color: #ffffff;
+      text-shadow: 0 4px 0 #d63031, 0 8px 24px rgba(255, 71, 87, 0.5);
+      margin-bottom: 4px;
+    }
+
+    p.subtitle {
+      font-size: 11px;
+      color: #a4b0be;
+      margin-bottom: 12px;
+      line-height: 1.35;
+      max-width: 320px;
+    }
+
+    /* POKI ASYMMETRIC GRID HUB (6 GAMES) */
+    .menu-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      width: 100%;
+      max-width: 345px;
+    }
+
+    .game-card-btn {
+      position: relative;
+      background: linear-gradient(135deg, #1e272e, #2f3542);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 10px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.2s, box-shadow 0.2s;
+      text-align: center;
+      outline: none;
+    }
+
+    .game-card-btn:active { transform: scale(0.95); }
+
+    /* FEATURED 1: MINI MOBA ARENA (TOP SPAN 2) */
+    .game-card-btn.moba {
+      grid-column: span 2;
+      flex-direction: row;
+      text-align: left;
+      padding: 12px 14px;
+      gap: 12px;
+      border-bottom: 5px solid #ff4757;
+      background: linear-gradient(135deg, #2c131a, #1e272e);
+    }
+    .game-card-btn.moba:hover {
+      border-color: #ff6b81;
+      box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
+    }
+
+    .game-card-btn.soccer { border-bottom: 5px solid #10ac84; }
+    .game-card-btn.soccer:hover { border-color: #2ed573; box-shadow: 0 6px 20px rgba(46, 213, 115, 0.35); }
+
+    .game-card-btn.basket { border-bottom: 5px solid #ee5253; }
+    .game-card-btn.basket:hover { border-color: #ff6b6b; box-shadow: 0 6px 20px rgba(255, 107, 107, 0.35); }
+
+    .game-card-btn.pool { border-bottom: 5px solid #16a085; }
+    .game-card-btn.pool:hover { border-color: #1abc9c; box-shadow: 0 6px 20px rgba(26, 188, 156, 0.35); }
+
+    .game-card-btn.volley { border-bottom: 5px solid #f39c12; }
+    .game-card-btn.volley:hover { border-color: #f1c40f; box-shadow: 0 6px 20px rgba(241, 196, 15, 0.35); }
+
+    .game-card-btn.pingpong { border-bottom: 5px solid #2980b9; }
+    .game-card-btn.pingpong:hover { border-color: #3498db; box-shadow: 0 6px 20px rgba(52, 152, 219, 0.35); }
+
+    .game-card-btn.softball { border-bottom: 5px solid #e74c3c; }
+    .game-card-btn.softball:hover { border-color: #ff7675; box-shadow: 0 6px 20px rgba(231, 76, 60, 0.35); }
+
+    .game-card-btn.trophy-btn {
+      grid-column: span 2;
+      flex-direction: row;
+      justify-content: center;
+      padding: 9px 14px;
+      gap: 10px;
+      border-bottom: 4px solid #f39c12;
+      background: linear-gradient(135deg, #2c3e50, #1e272e);
+    }
+    .game-card-btn.trophy-btn:hover { border-color: #ffd32a; }
+
+    .card-icon {
+      font-size: 28px;
+      line-height: 1;
+      filter: drop-shadow(0 3px 6px rgba(0,0,0,0.5));
+    }
+
+    .card-content h3 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 14px;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .card-content p {
+      font-size: 9.5px;
+      color: #ced6e0;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    /* JERSEY SELECTOR GRID */
+    .jersey-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      width: 100%;
+      max-width: 340px;
+      margin-bottom: 12px;
+    }
+
+    .jersey-item {
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 8px 4px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+    .jersey-item:active { transform: scale(0.92); }
+
+    .jersey-item.selected {
+      border-color: #ffd32a;
+      background: rgba(255, 211, 42, 0.18);
+      box-shadow: 0 0 15px rgba(255, 211, 42, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .jersey-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .jersey-name {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      color: #f1f2f6;
+    }
+
+    .round-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ff4757;
+      color: #fff;
+      font-family: 'Fredoka One', cursive;
+      font-size: 12px;
+      padding: 3px 12px;
+      border-radius: 20px;
+      border: 2px solid #fff;
+      box-shadow: 0 4px 12px rgba(255, 71, 87, 0.4);
+    }
+
+    /* TOP HUD */
+    #hud {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .hud-btn {
+      pointer-events: auto;
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border-radius: 12px;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+    }
+    .hud-btn:active { transform: scale(0.9); }
+
+    .hud-center {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .score-badge {
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 16px;
+      color: #ffd32a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(6px);
+    }
+
+    .score-badge span {
+      color: #fff;
+      font-size: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    #banner-notify {
+      position: absolute;
+      top: 64px;
+      left: 50%;
+      transform: translateX(-50%) scale(0.7);
+      background: #ff4757;
+      color: #fff;
+      font-family: 'Fredoka One', cursive;
+      font-size: 19px;
+      padding: 5px 18px;
+      border-radius: 40px;
+      box-shadow: 0 6px 25px rgba(255, 71, 87, 0.6);
+      border: 3px solid #fff;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 15;
+      white-space: nowrap;
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    #banner-notify.show {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+
+    #tutorial-hint {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #f1f2f6;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      pointer-events: none;
+      z-index: 10;
+      white-space: nowrap;
+      animation: pulseHint 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseHint {
+      0%, 100% { opacity: 0.8; transform: translateX(-50%) translateY(0); }
+      50% { opacity: 1; transform: translateX(-50%) translateY(-3px); }
+    }
+
+    /* MOBA ON-SCREEN CONTROLS (ONLY ACTIVE DURING MOBA GAME) */
+    #moba-controls {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 12;
+    }
+        /* SOFTBALL DUAL CONTROLS */
+    #softball-controls {
+      position: absolute;
+      bottom: 25px;
+      left: 0;
+      width: 100%;
+      padding: 0 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 60;
+      pointer-events: none;
+    }
+    #softball-controls.hidden { display: none !important; }
+    .softball-btn {
+      pointer-events: auto;
+      font-family: 'Fredoka One', cursive, sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      color: #ffffff;
+      padding: 12px 18px;
+      border-radius: 50px;
+      border: 2px solid #ffd32a;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.1s;
+      outline: none;
+    }
+    .softball-btn:active { transform: scale(0.92); }
+    .softball-btn.pitch {
+      background: linear-gradient(135deg, #f39c12, #d35400);
+      border-color: #ffeaa7;
+    }
+    .softball-btn.swing {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      border-color: #ffd32a;
+      font-size: 16px;
+      padding: 14px 22px;
+    }
+
+    #moba-controls.hidden {
+      display: none !important;
+    }
+
+    .moba-action-group {
+      position: absolute;
+      bottom: 24px;
+      right: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      pointer-events: auto;
+    }
+
+    .moba-skills-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .moba-btn {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.75);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      position: relative;
+      outline: none;
+      touch-action: manipulation;
+    }
+    .moba-btn:active { transform: scale(0.92); }
+
+    .moba-btn.attack {
+      width: 68px;
+      height: 68px;
+      font-size: 32px;
+      background: linear-gradient(135deg, #ff4757, #ff6b81);
+      border-color: #ffd32a;
+      box-shadow: 0 0 20px rgba(255, 71, 87, 0.6);
+    }
+
+    .moba-btn.skill1 {
+      background: linear-gradient(135deg, #2ed573, #10ac84);
+    }
+    .moba-btn.skill2 {
+      background: linear-gradient(135deg, #ffa502, #ff6348);
+    }
+
+    .moba-cd {
+      position: absolute;
+      font-family: 'Fredoka One', cursive;
+      font-size: 15px;
+      color: #fff;
+      text-shadow: 0 2px 4px #000;
+    }
+
+    .moba-btn-label {
+      font-size: 8px;
+      font-weight: 800;
+      color: #fff;
+      margin-top: -2px;
+      text-transform: uppercase;
+    }
+
+    .btn-action {
+      font-family: 'Fredoka One', cursive;
+      font-size: 16px;
+      padding: 11px 20px;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      transition: transform 0.1s, box-shadow 0.2s;
+      outline: none;
+      width: 100%;
+      max-width: 270px;
+      margin-top: 6px;
+    }
+    .btn-action:active { transform: scale(0.95); }
+
+    .btn-start {
+      background: linear-gradient(135deg, #ff4757, #ff6b81);
+      color: #fff;
+      border-bottom: 4px solid #b33939;
+    }
+    .btn-restart {
+      background: linear-gradient(135deg, #2ed573, #10ac84);
+      color: #fff;
+      border-bottom: 4px solid #079992;
+    }
+    .btn-menu {
+      background: #4b6584;
+      color: #fff;
+      border-bottom: 4px solid #2d3e50;
+    }
+
+    .teacher-tag {
+      margin-top: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #747d8c;
+    }
+    .teacher-tag span { color: #ffa502; }
+
+    /* TROPHY DISPLAY ROOM (6 TROPHIES) */
+    .trophy-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      width: 100%;
+      max-width: 320px;
+      margin: 10px 0;
+    }
+
+    .trophy-box {
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 8px 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .trophy-box.unlocked {
+      background: rgba(255, 211, 42, 0.15);
+      border-color: #ffd32a;
+      box-shadow: 0 4px 15px rgba(255, 211, 42, 0.25);
+    }
+
+    .trophy-icon {
+      font-size: 26px;
+      filter: grayscale(100%) opacity(0.4);
+    }
+    .trophy-box.unlocked .trophy-icon {
+      filter: none;
+      animation: bounceTrophy 1.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes bounceTrophy {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-3px); }
+    }
+
+    .trophy-title {
+      font-size: 9.5px;
+      font-weight: 800;
+      color: #ffd32a;
+    }
+    .trophy-desc {
+      font-size: 8px;
+      color: #a4b0be;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="game-wrapper">
+    <!-- TOP HUD -->
+    <div id="hud">
+      <button class="hud-btn" id="btn-back-menu" title="Menu Utama">🏠</button>
+      <div class="hud-center">
+        <div class="round-indicator" id="hud-round-tag">🏆 SMKN 6 ARENA</div>
+        <div class="score-badge" id="hud-score-box">
+          <span>Skor:</span> <b id="hud-score">0</b>
+        </div>
+      </div>
+      <button class="hud-btn" id="btn-sound" title="Toggle Suara">🔊</button>
+    </div>
+
+    <!-- FLOATING BANNER -->
+    <div id="banner-notify">GOOOL!! 🔥</div>
+
+    <!-- CANVAS GAMEPLAY -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- MOBA ON-SCREEN TOUCH BUTTONS -->
+    <div id="moba-controls" class="hidden">
+      <div class="moba-action-group">
+        <div class="moba-skills-row">
+          <button class="moba-btn skill1" id="moba-btn-skill1">
+            ⚡
+            <span class="moba-cd" id="moba-cd1"></span>
+            <span class="moba-btn-label">Dash</span>
+          </button>
+          <button class="moba-btn skill2" id="moba-btn-skill2">
+            ☄️
+            <span class="moba-cd" id="moba-cd2"></span>
+            <span class="moba-btn-label">Ulti</span>
+          </button>
+        </div>
+        <button class="moba-btn attack" id="moba-btn-attack">
+          ⚔️
+        </button>
+      </div>
+    </div>
+
+    <!-- SOFTBALL DUAL TOUCH CONTROLS -->
+    <div id="softball-controls" class="hidden">
+      <button id="btn-softball-pitch" class="softball-btn pitch">
+        ⚾ LEMPAR BOLA!
+      </button>
+      <button id="btn-softball-swing" class="softball-btn swing">
+        💥 AYUN BAT!
+      </button>
+    </div>
+
+    <!-- HINT TUTORIAL -->
+    <div id="tutorial-hint">👆 Tarik bola ke belakang & lepas untuk menembak!</div>
+
+    <!-- 1. SCREEN: MAIN MENU (6 POKI GAMES) -->
+    <div class="screen" id="screen-menu">
+      <div class="badge-top">⚡ POKI STYLE SPORTS & MOBA ARENA</div>
+      <h1 class="game-title">ARENA OLAHRAGA<br>SMKN 6</h1>
+      <p class="subtitle">6 Cabang Olahraga & Game Populer Siswa. Pilih game, bela jurusanmu, dan raih Trofi Emas!</p>
+
+      <div class="menu-cards">
+        <!-- 1. FEATURED: MINI MOBA ARENA (MOBILE LEGENDS STYLE) -->
+        <button class="game-card-btn moba" onclick="openJerseySelect('moba')">
+          <span class="card-icon">⚔️</span>
+          <div class="card-content">
+            <h3 style="color:#ffd32a;">MINI MOBA ARENA 🔥</h3>
+            <p>Push turret, tumpas creep & hancurkan base musuh ala MLBB!</p>
+          </div>
+        </button>
+
+        <!-- 2. SEPAK BOLA -->
+        <button class="game-card-btn soccer" onclick="openJerseySelect('soccer')">
+          <span class="card-icon">⚽</span>
+          <div class="card-content">
+            <h3>PENALTI BOLA</h3>
+            <p>Bobol kiper gesit!</p>
+          </div>
+        </button>
+
+        <!-- 3. BASKET -->
+        <button class="game-card-btn basket" onclick="openJerseySelect('basket')">
+          <span class="card-icon">🏀</span>
+          <div class="card-content">
+            <h3>BASKET SLAM</h3>
+            <p>Moving hoop 3-point!</p>
+          </div>
+        </button>
+
+        <!-- 4. BILLIARD -->
+        <button class="game-card-btn pool" onclick="openJerseySelect('pool')">
+          <span class="card-icon">🎱</span>
+          <div class="card-content">
+            <h3>BILLIARD POOL</h3>
+            <p>Sodok bola 8-ball!</p>
+          </div>
+        </button>
+
+        <!-- 5. BOLA VOLI -->
+        <button class="game-card-btn volley" onclick="openJerseySelect('volley')">
+          <span class="card-icon">🏐</span>
+          <div class="card-content">
+            <h3>VOLLEY SPIKE</h3>
+            <p>Smash lewati net!</p>
+          </div>
+        </button>
+
+        <!-- 6. TENIS MEJA -->
+        <button class="game-card-btn pingpong" onclick="openJerseySelect('pingpong')">
+          <span class="card-icon">🏓</span>
+          <div class="card-content">
+            <h3>PING PONG PRO</h3>
+            <p>Rally gesit tenis meja!</p>
+          </div>
+        </button>
+
+        <!-- 7. SOFTBALL -->
+        <button class="game-card-btn softball" onclick="openJerseySelect('softball')">
+          <span class="card-icon">⚾</span>
+          <div class="card-content">
+            <h3>SOFTBALL SLUGGER</h3>
+            <p>Ayun bat, cetak Home Run!</p>
+          </div>
+        </button>
+
+        <!-- TROPHY ROOM -->
+        <button class="game-card-btn trophy-btn" onclick="openTrophyRoom()">
+          <span class="card-icon">🏆</span>
+          <div class="card-content">
+            <h3>LEMARI PIALA SMKN 6</h3>
+            <p>Koleksi 7 Trofi Emas & Rekor Skor!</p>
+          </div>
+        </button>
+      </div>
+
+      <div class="teacher-tag">
+        Pembina PJOK: <span>Pak Alrizal Arie Martha, S.Pd</span>
+      </div>
+
+      <a href="https://alrizal-arie.github.io/Kuis-PJOK-26-27-Ganjil/" target="_blank" style="margin-top: 14px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 50px; background: rgba(255, 255, 255, 0.08); border: 1.5px solid rgba(255, 255, 255, 0.25); color: #ffd32a; font-family: 'Fredoka One', cursive, sans-serif; font-size: 13px; text-decoration: none; box-shadow: 0 4px 14px rgba(0,0,0,0.3); transition: all 0.2s;">
+        📝 BUKA KUIS PJOK ONLINE ➔
+      </a>
+    </div>
+
+    <!-- 2. SCREEN: JERSEY SELECTOR -->
+    <div class="screen hidden" id="screen-jersey">
+      <div class="badge-top">👕 PILIH JERSEY JURUSAN</div>
+      <h1 class="game-title" style="font-size: 24px;">BELA JURUSANMU!</h1>
+      <p class="subtitle">Pilih seragam kebanggaan kelasmu sebelum bertanding:</p>
+
+      <div class="jersey-grid" id="jersey-container"></div>
+
+      <div style="background: rgba(255,255,255,0.06); padding: 8px 16px; border-radius: 12px; margin-bottom: 10px; width: 100%; max-width: 320px;">
+        <span style="font-size: 10px; color: #a4b0be; text-transform: uppercase;">Jersey Dipilih:</span>
+        <div style="font-family: 'Fredoka One', cursive; font-size: 17px; color: #ffd32a;" id="selected-jersey-name">DKV (Ungu Kreatif)</div>
+      </div>
+
+      <button class="btn-action btn-start" onclick="confirmStartTournament()">🔥 MULAI TANDING!</button>
+      <button class="btn-action btn-menu" onclick="showMainMenu()">⬅️ KEMBALI</button>
+    </div>
+
+    <!-- 3. SCREEN: TROPHY ROOM (6 TROPHIES) -->
+    <div class="screen hidden" id="screen-trophy">
+      <div class="badge-top">🏆 HALL OF FAME</div>
+      <h1 class="game-title" style="font-size: 24px;">LEMARI PIALA</h1>
+      <p class="subtitle">Koleksi trofi emas 7 game SMKN 6 Surabaya:</p>
+
+      <div class="trophy-grid">
+        <div class="trophy-box" id="trophy-moba-gold">
+          <div class="trophy-icon">⚔️</div>
+          <div class="trophy-title">PIALA MOBA</div>
+          <div class="trophy-desc">Juara MLBB Arena</div>
+        </div>
+        <div class="trophy-box" id="trophy-soccer-gold">
+          <div class="trophy-icon">⚽</div>
+          <div class="trophy-title">PIALA BOLA</div>
+          <div class="trophy-desc">Juara Penalti</div>
+        </div>
+        <div class="trophy-box" id="trophy-basket-gold">
+          <div class="trophy-icon">🏀</div>
+          <div class="trophy-title">PIALA BASKET</div>
+          <div class="trophy-desc">Juara Slam</div>
+        </div>
+        <div class="trophy-box" id="trophy-pool-gold">
+          <div class="trophy-icon">🎱</div>
+          <div class="trophy-title">PIALA POOL</div>
+          <div class="trophy-desc">Master Billiard</div>
+        </div>
+        <div class="trophy-box" id="trophy-volley-gold">
+          <div class="trophy-icon">🏐</div>
+          <div class="trophy-title">PIALA VOLI</div>
+          <div class="trophy-desc">Spiker Terbaik</div>
+        </div>
+        <div class="trophy-box" id="trophy-pingpong-gold">
+          <div class="trophy-icon">🏓</div>
+          <div class="trophy-title">PIALA PINGPONG</div>
+          <div class="trophy-desc">Rally Champion</div>
+        </div>
+        <div class="trophy-box" id="trophy-softball-gold">
+          <div class="trophy-icon">⚾</div>
+          <div class="trophy-title">PIALA SOFTBALL</div>
+          <div class="trophy-desc">Raja Home Run</div>
+        </div>
+      </div>
+
+      <div style="background: rgba(255,255,255,0.08); padding: 10px 16px; border-radius: 12px; margin-bottom: 12px; width: 100%; max-width: 320px;">
+        <div style="font-size: 10px; color: #a4b0be;">REKOR SKOR TERTINGGI:</div>
+        <div style="font-family: 'Fredoka One', cursive; font-size: 30px; color: #ffd32a;" id="trophy-highscore">0</div>
+        <div style="font-size: 10.5px; color: #2ed573; font-weight: 700;" id="trophy-best-jurusan">Belum ada rekor</div>
+      </div>
+
+      <button class="btn-action btn-menu" onclick="showMainMenu()">🏠 KEMBALI KE MENU</button>
+    </div>
+
+    <!-- 4. SCREEN: GAME OVER / ROUND FINISH -->
+    <div class="screen hidden" id="screen-gameover">
+      <div class="badge-top" id="go-badge">🏆 SESI SELESAI</div>
+      <h1 class="game-title" id="go-title">HASIL TANDING</h1>
+      <p class="subtitle" id="go-subtitle">Hebat! Kamu telah menyelesaikan pertandingan.</p>
+
+      <div style="background: rgba(255,255,255,0.08); padding: 14px 20px; border-radius: 18px; margin-bottom: 14px; border: 1px solid rgba(255,255,255,0.15); width: 100%; max-width: 300px;">
+        <div style="font-size: 11px; color: #a4b0be; font-weight: 700; text-transform: uppercase;">Total Poin</div>
+        <div style="font-family: 'Fredoka One', cursive; font-size: 42px; color: #ffd32a;" id="go-final-score">0</div>
+        <div style="font-size: 11.5px; color: #2ed573; font-weight: 800;" id="go-stat-detail">5 Sukses</div>
+      </div>
+
+      <button class="btn-action btn-restart" id="btn-next-round" onclick="advanceOrRestart()">🔄 MAIN LAGI</button>
+      <button class="btn-action btn-menu" onclick="showMainMenu()">🏠 PILIH GAME LAIN</button>
+    </div>
+  </div>
+
+  <script>
+    /* ==========================================================================
+       8 JURUSAN RESMI SMKN 6 SURABAYA
+       ========================================================================== */
+        const JURUSAN_LIST = [
+      { id: 'DKV', name: 'DKV', full: 'DKV (Oranye)', color: '#e67e22', sec: '#f39c12', num: '1', textDark: false },
+      { id: 'AK', name: 'AK', full: 'AK (Hijau Toska)', color: '#00b894', sec: '#55efc4', num: '2', textDark: false },
+      { id: 'ULW', name: 'ULW', full: 'ULW (Merah)', color: '#d63031', sec: '#ff7675', num: '3', textDark: false },
+      { id: 'TKI', name: 'TKI', full: 'TKI (Coklat)', color: '#6d4c41', sec: '#8d6e63', num: '4', textDark: false },
+      { id: 'PH', name: 'PH', full: 'PH (Biru)', color: '#0984e3', sec: '#74b9ff', num: '5', textDark: false },
+      { id: 'KULINER', name: 'Kuliner', full: 'Kuliner (Hijau)', color: '#27ae60', sec: '#2ecc71', num: '6', textDark: false },
+      { id: 'DPB', name: 'DPB', full: 'DPB (Kuning)', color: '#f1c40f', sec: '#ffeaa7', num: '7', textDark: true },
+      { id: 'TKC', name: 'TKC', full: 'TKC (Merah Muda)', color: '#e84393', sec: '#fd79a8', num: '8', textDark: false }
+    ];
+
+    let selectedJurusan = JURUSAN_LIST[0];
+    let selectedSport = 'moba';
+
+    function getStoredData() {
+      try {
+        const d = localStorage.getItem('pjok_smkn6_trophies_v3');
+        return d ? JSON.parse(d) : {
+          mobaGold: false, soccerGold: false, basketGold: false, poolGold: false, volleyGold: false, pingpongGold: false,
+          highscore: 0, bestJurusan: ''
+        };
+      } catch (e) {
+        return { mobaGold: false, soccerGold: false, basketGold: false, poolGold: false, volleyGold: false, pingpongGold: false, highscore: 0, bestJurusan: '' };
+      }
+    }
+
+    function saveStoredData(data) {
+      try { localStorage.setItem('pjok_smkn6_trophies_v3', JSON.stringify(data)); } catch (e) {}
+    }
+
+    /* ==========================================================================
+       SYNTHESIZED SOUND SYSTEM (Web Audio API)
+       ========================================================================== */
+    const Sound = {
+      ctx: null,
+      enabled: true,
+
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+      },
+
+      playKick() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(150, now);
+        osc.frequency.exponentialRampToValueAtTime(32, now + 0.16);
+        gain.gain.setValueAtTime(0.5, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.16);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.17);
+      },
+
+      playGoal() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        [261.63, 329.63, 392.00, 523.25, 659.25].forEach((freq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + idx * 0.07);
+          gain.gain.setValueAtTime(0.28, now + idx * 0.07);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.35);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + idx * 0.07);
+          osc.stop(now + idx * 0.07 + 0.36);
+        });
+      },
+
+      playSwish() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const bufferSize = this.ctx.sampleRate * 0.22;
+        const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
+        const noise = this.ctx.createBufferSource();
+        noise.buffer = buffer;
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1350, now);
+        filter.Q.value = 3.5;
+        const gain = this.ctx.createGain();
+        gain.gain.setValueAtTime(0.45, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.22);
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(this.ctx.destination);
+        noise.start(now);
+      },
+
+      playBlock() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(120, now);
+        osc.frequency.exponentialRampToValueAtTime(45, now + 0.2);
+        gain.gain.setValueAtTime(0.35, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.21);
+      },
+
+      playPoolClack() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(750, now);
+        osc.frequency.exponentialRampToValueAtTime(180, now + 0.08);
+        gain.gain.setValueAtTime(0.6, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.09);
+      },
+
+      playPingPong() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(980, now);
+        osc.frequency.exponentialRampToValueAtTime(320, now + 0.06);
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.06);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.07);
+      },
+
+      playWhistle(isFinal = false) {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(2450, now);
+        osc.frequency.linearRampToValueAtTime(2650, now + 0.05);
+        osc.frequency.linearRampToValueAtTime(2380, now + (isFinal ? 0.6 : 0.2));
+        gain.gain.setValueAtTime(0.22, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + (isFinal ? 0.7 : 0.35));
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + (isFinal ? 0.72 : 0.36));
+      },
+
+      playWhoosh() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(450, now);
+        osc.frequency.exponentialRampToValueAtTime(110, now + 0.14);
+        gain.gain.setValueAtTime(0.35, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.14);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.15);
+      },
+
+      playThud() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(140, now);
+        osc.frequency.exponentialRampToValueAtTime(40, now + 0.11);
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.11);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.12);
+      },
+
+      playDing() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(880, now);
+        osc.frequency.exponentialRampToValueAtTime(440, now + 0.22);
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.22);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.23);
+      }
+    };
+
+    /* ==========================================================================
+       CANVAS & ENGINE SETUP
+       ========================================================================== */
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    let W = 0, H = 0;
+
+    function resizeCanvas() {
+      const wrapper = document.getElementById('game-wrapper');
+      W = wrapper.clientWidth;
+      H = wrapper.clientHeight;
+      canvas.width = W;
+      canvas.height = H;
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    // BIND TOMBOL SOFTBALL KONTROL
+    const btnSoftballPitch = document.getElementById('btn-softball-pitch');
+    if (btnSoftballPitch) {
+      const doPitch = (e) => { e.preventDefault(); e.stopPropagation(); Sound.init(); if (currentGame === 'softball') Softball.pitch(); };
+      btnSoftballPitch.addEventListener('click', doPitch);
+      btnSoftballPitch.addEventListener('touchstart', doPitch, { passive: false });
+    }
+
+    const btnSoftballSwing = document.getElementById('btn-softball-swing');
+    if (btnSoftballSwing) {
+      const doSwing = (e) => { e.preventDefault(); e.stopPropagation(); Sound.init(); if (currentGame === 'softball') Softball.swing(); };
+      btnSoftballSwing.addEventListener('click', doSwing);
+      btnSoftballSwing.addEventListener('touchstart', doSwing, { passive: false });
+    }
+    // Bind Tombol Ayun Bat Softball
+    const btnSwing = document.getElementById('btn-softball-swing');
+    if (btnSwing) {
+      btnSwing.addEventListener('click', (e) => { e.stopPropagation(); Softball.swing(); });
+      btnSwing.addEventListener('touchstart', (e) => { e.preventDefault(); e.stopPropagation(); Softball.swing(); }, { passive: false });
+    }
+
+    resizeCanvas();
+
+    let currentGame = null; // 'moba', 'soccer', 'basket', 'pool', 'volley', 'pingpong'
+    let score = 0;
+    let attempts = 0;
+    const MAX_ATTEMPTS = 5;
+    let particles = [];
+
+    const banner = document.getElementById('banner-notify');
+    function showBanner(text, color = '#ff4757') {
+      banner.textContent = text;
+      banner.style.backgroundColor = color;
+      banner.classList.add('show');
+      setTimeout(() => banner.classList.remove('show'), 1250);
+    }
+
+    function spawnConfetti(x, y, count = 30) {
+      const colors = ['#ffd32a', '#ff4757', '#2ed573', '#70a1ff', selectedJurusan.color, selectedJurusan.sec];
+      for (let i = 0; i < count; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 2 + Math.random() * 7;
+        particles.push({
+          x: x, y: y,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 2.5,
+          radius: 3 + Math.random() * 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1,
+          gravity: 0.16
+        });
+      }
+    }
+
+    function updateParticles() {
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += p.gravity;
+        p.alpha -= 0.02;
+        if (p.alpha <= 0) particles.splice(i, 1);
+      }
+    }
+
+    function drawParticles() {
+      particles.forEach(p => {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      });
+    }
+
+    function updateHUD() {
+      document.getElementById('hud-score').textContent = score;
+    }
+
+    
+    /* ==========================================================================
+       CABOR 6: MINI MOBA (HEROES OF SMKN 6 - MOBILE LEGENDS STYLE)
+       ========================================================================== */
+    const Moba = {
+      player: { x: 0, y: 0, r: 18, hp: 120, maxHp: 120, speed: 3.2, level: 1, exp: 0, kills: 0, attackCooldown: 0, skill1Cd: 0, skill2Cd: 0, isDashing: false, dashTimer: 0, dirX: 0, dirY: -1 },
+      enemyHero: { x: 0, y: 0, r: 18, hp: 110, maxHp: 110, speed: 2.6, attackCooldown: 0, respawnTimer: 0, state: 'lane', dirX: 0, dirY: 1 },
+      playerTurret: { x: 0, y: 0, r: 24, hp: 280, maxHp: 280, range: 110, cooldown: 0 },
+      enemyTurret: { x: 0, y: 0, r: 24, hp: 280, maxHp: 280, range: 110, cooldown: 0 },
+      playerBase: { x: 0, y: 0, r: 32, hp: 400, maxHp: 400 },
+      enemyBase: { x: 0, y: 0, r: 32, hp: 400, maxHp: 400 },
+      minions: [],
+      projectiles: [],
+      slashEffects: [],
+      spawnTimer: 0,
+      waveCount: 0,
+      firstBlood: false,
+
+      // Virtual Joystick state
+      joystick: { active: false, touchId: null, baseX: 0, baseY: 0, curX: 0, curY: 0, vx: 0, vy: 0 },
+
+      init() {
+        this.firstBlood = false;
+        this.waveCount = 0;
+        this.spawnTimer = 0;
+        this.minions = [];
+        this.projectiles = [];
+        this.slashEffects = [];
+
+        // Coordinates layout vertikal
+        const midX = W / 2;
+        this.playerBase = { x: midX, y: H * 0.90, r: 28, hp: 400, maxHp: 400 };
+        this.playerTurret = { x: midX, y: H * 0.72, r: 22, hp: 280, maxHp: 280, range: 105, cooldown: 0 };
+
+        this.enemyTurret = { x: midX, y: H * 0.32, r: 22, hp: 280, maxHp: 280, range: 105, cooldown: 0 };
+        this.enemyBase = { x: midX, y: H * 0.12, r: 28, hp: 400, maxHp: 400 };
+
+        this.player = {
+          x: midX, y: H * 0.82, r: 18,
+          hp: 120, maxHp: 120, speed: 3.4, level: 1, exp: 0, kills: 0,
+          attackCooldown: 0, skill1Cd: 0, skill2Cd: 0, isDashing: false, dashTimer: 0,
+          dirX: 0, dirY: -1
+        };
+
+        this.enemyHero = {
+          x: midX, y: H * 0.22, r: 18,
+          hp: 110, maxHp: 110, speed: 2.5, attackCooldown: 0, respawnTimer: 0,
+          state: 'lane', dirX: 0, dirY: 1
+        };
+
+        this.spawnWave();
+        document.getElementById('moba-controls').classList.remove('hidden');
+      },
+
+      spawnWave() {
+        this.waveCount++;
+        const midX = W / 2;
+        // 2 Minions per side
+        for (let i = 0; i < 2; i++) {
+          this.minions.push({
+            team: 'player',
+            x: midX + (i === 0 ? -16 : 16),
+            y: this.playerBase.y - 30,
+            r: 10, hp: 55, maxHp: 55, speed: 1.5, damage: 8, range: 45, cooldown: 0
+          });
+          this.minions.push({
+            team: 'enemy',
+            x: midX + (i === 0 ? -16 : 16),
+            y: this.enemyBase.y + 30,
+            r: 10, hp: 55, maxHp: 55, speed: 1.5, damage: 8, range: 45, cooldown: 0
+          });
+        }
+      },
+
+      update() {
+        // Cooldowns
+        if (this.player.attackCooldown > 0) this.player.attackCooldown--;
+        if (this.player.skill1Cd > 0) {
+          this.player.skill1Cd--;
+          document.getElementById('moba-cd1').textContent = Math.ceil(this.player.skill1Cd / 60) || '';
+        } else {
+          document.getElementById('moba-cd1').textContent = '';
+        }
+
+        if (this.player.skill2Cd > 0) {
+          this.player.skill2Cd--;
+          document.getElementById('moba-cd2').textContent = Math.ceil(this.player.skill2Cd / 60) || '';
+        } else {
+          document.getElementById('moba-cd2').textContent = '';
+        }
+
+        // Joystick Movement
+        if (this.joystick.active) {
+          const moveX = this.joystick.vx * this.player.speed;
+          const moveY = this.joystick.vy * this.player.speed;
+          this.player.x += moveX;
+          this.player.y += moveY;
+          if (Math.hypot(moveX, moveY) > 0.1) {
+            this.player.dirX = this.joystick.vx;
+            this.player.dirY = this.joystick.vy;
+          }
+        }
+
+        // Clamp player bounds inside arena
+        this.player.x = Math.max(W * 0.18, Math.min(W * 0.82, this.player.x));
+        this.player.y = Math.max(this.enemyBase.y + 30, Math.min(this.playerBase.y + 10, this.player.y));
+
+        // Player Dash logic
+        if (this.player.isDashing) {
+          this.player.x += this.player.dirX * 9;
+          this.player.y += this.player.dirY * 9;
+          this.player.dashTimer--;
+          if (this.player.dashTimer <= 0) this.player.isDashing = false;
+        }
+
+        // Minion Spawn Timer
+        this.spawnTimer++;
+        if (this.spawnTimer >= 600) { // tiap 10 detik
+          this.spawnTimer = 0;
+          this.spawnWave();
+        }
+
+        // Update Minions
+        for (let i = this.minions.length - 1; i >= 0; i--) {
+          const m = this.minions[i];
+          if (m.hp <= 0) {
+            this.minions.splice(i, 1);
+            continue;
+          }
+          if (m.cooldown > 0) m.cooldown--;
+
+          // Target acquisition
+          let target = null;
+          let minDist = 999;
+
+          if (m.team === 'player') {
+            // Player minion cari enemy minion, enemy hero, enemy turret, enemy base
+            const enemies = [...this.minions.filter(em => em.team === 'enemy')];
+            if (this.enemyHero.hp > 0) enemies.push(this.enemyHero);
+            if (this.enemyTurret.hp > 0) enemies.push(this.enemyTurret);
+            else if (this.enemyBase.hp > 0) enemies.push(this.enemyBase);
+
+            enemies.forEach(e => {
+              const d = Math.hypot(e.x - m.x, e.y - m.y);
+              if (d < minDist) { minDist = d; target = e; }
+            });
+
+            if (target && minDist <= m.range) {
+              if (m.cooldown === 0) {
+                target.hp -= m.damage;
+                m.cooldown = 45;
+                this.spawnBullet(m.x, m.y, target.x, target.y, '#70a1ff');
+                Sound.playPingPong();
+              }
+            } else {
+              m.y -= m.speed; // Move up towards enemy base
+            }
+          } else {
+            // Enemy minion cari player minion, player hero, player turret, player base
+            const targets = [...this.minions.filter(pm => pm.team === 'player')];
+            targets.push(this.player);
+            if (this.playerTurret.hp > 0) targets.push(this.playerTurret);
+            else if (this.playerBase.hp > 0) targets.push(this.playerBase);
+
+            targets.forEach(t => {
+              const d = Math.hypot(t.x - m.x, t.y - m.y);
+              if (d < minDist) { minDist = d; target = t; }
+            });
+
+            if (target && minDist <= m.range) {
+              if (m.cooldown === 0) {
+                target.hp -= m.damage;
+                m.cooldown = 45;
+                this.spawnBullet(m.x, m.y, target.x, target.y, '#ff4757');
+                Sound.playPingPong();
+              }
+            } else {
+              m.y += m.speed; // Move down towards player base
+            }
+          }
+        }
+
+        // Enemy Hero AI
+        if (this.enemyHero.hp > 0) {
+          if (this.enemyHero.attackCooldown > 0) this.enemyHero.attackCooldown--;
+
+          const distToPlayer = Math.hypot(this.player.x - this.enemyHero.x, this.player.y - this.enemyHero.y);
+
+          if (this.enemyHero.hp < this.enemyHero.maxHp * 0.35) {
+            // Mundur ke base untuk sembuh
+            this.enemyHero.y -= this.enemyHero.speed;
+            if (this.enemyHero.y <= this.enemyBase.y + 40) {
+              this.enemyHero.hp = Math.min(this.enemyHero.maxHp, this.enemyHero.hp + 0.5);
+            }
+          } else if (distToPlayer < 110) {
+            // Dekati player & serang
+            const angle = Math.atan2(this.player.y - this.enemyHero.y, this.player.x - this.enemyHero.x);
+            this.enemyHero.x += Math.cos(angle) * this.enemyHero.speed;
+            this.enemyHero.y += Math.sin(angle) * this.enemyHero.speed;
+
+            if (distToPlayer < 45 && this.enemyHero.attackCooldown === 0) {
+              this.player.hp -= 18;
+              this.enemyHero.attackCooldown = 50;
+              Sound.playKick();
+              this.spawnSlash(this.player.x, this.player.y, '#ff4757');
+              if (this.player.hp <= 0) this.onPlayerDeath();
+            }
+          } else {
+            // Push lane maju bersama minion
+            if (this.enemyHero.y < H * 0.55) this.enemyHero.y += 1.2;
+          }
+        } else {
+          // Respawn timer enemy hero
+          this.enemyHero.respawnTimer--;
+          if (this.enemyHero.respawnTimer <= 0) {
+            this.enemyHero.hp = this.enemyHero.maxHp;
+            this.enemyHero.x = W / 2;
+            this.enemyHero.y = this.enemyBase.y + 30;
+            showBanner('ENEMY HERO RESPAWNED! ⚔️', '#ffa502');
+          }
+        }
+
+        // Turret Logic
+        this.updateTurret(this.playerTurret, 'player');
+        this.updateTurret(this.enemyTurret, 'enemy');
+
+        // Check Victory & Defeat
+        if (this.enemyBase.hp <= 0) {
+          this.enemyBase.hp = 0;
+          this.onVictory();
+        } else if (this.playerBase.hp <= 0) {
+          this.playerBase.hp = 0;
+          this.onDefeat();
+        }
+
+        // Projectiles & Slash update
+        this.updateEffects();
+      },
+
+      updateTurret(turret, team) {
+        if (turret.hp <= 0) return;
+        if (turret.cooldown > 0) turret.cooldown--;
+
+        // Cari target dalam jangkauan
+        let target = null;
+        if (team === 'player') {
+          // Minion musuh dulu, baru enemy hero
+          const hostileMinions = this.minions.filter(m => m.team === 'enemy' && Math.hypot(m.x - turret.x, m.y - turret.y) <= turret.range);
+          if (hostileMinions.length > 0) target = hostileMinions[0];
+          else if (this.enemyHero.hp > 0 && Math.hypot(this.enemyHero.x - turret.x, this.enemyHero.y - turret.y) <= turret.range) target = this.enemyHero;
+        } else {
+          // Minion player dulu, baru player hero
+          const playerMinions = this.minions.filter(m => m.team === 'player' && Math.hypot(m.x - turret.x, m.y - turret.y) <= turret.range);
+          if (playerMinions.length > 0) target = playerMinions[0];
+          else if (this.player.hp > 0 && Math.hypot(this.player.x - turret.x, this.player.y - turret.y) <= turret.range) target = this.player;
+        }
+
+        if (target && turret.cooldown === 0) {
+          target.hp -= 26;
+          turret.cooldown = 50;
+          this.spawnBullet(turret.x, turret.y, target.x, target.y, team === 'player' ? '#70a1ff' : '#ff4757', 6);
+          Sound.playBlock();
+        }
+      },
+
+      basicAttack() {
+        if (this.player.attackCooldown > 0 || this.player.hp <= 0) return;
+        this.player.attackCooldown = 22;
+        Sound.playKick();
+
+        // Cari musuh terdekat dalam radius 55
+        let hit = false;
+        const enemies = [...this.minions.filter(m => m.team === 'enemy')];
+        if (this.enemyHero.hp > 0) enemies.push(this.enemyHero);
+        if (this.enemyTurret.hp > 0) enemies.push(this.enemyTurret);
+        else if (this.enemyBase.hp > 0) enemies.push(this.enemyBase);
+
+        enemies.forEach(e => {
+          if (Math.hypot(e.x - this.player.x, e.y - this.player.y) < 58) {
+            const dmg = 24 + this.player.level * 4;
+            e.hp -= dmg;
+            hit = true;
+            this.spawnSlash(e.x, e.y, selectedJurusan.color);
+            if (e === this.enemyHero && e.hp <= 0) this.onEnemyHeroSlain();
+          }
+        });
+
+        if (!hit) {
+          // Slash di depan player
+          const sx = this.player.x + this.player.dirX * 30;
+          const sy = this.player.y + this.player.dirY * 30;
+          this.spawnSlash(sx, sy, selectedJurusan.sec);
+        }
+      },
+
+      skill1Dash() {
+        if (this.player.skill1Cd > 0 || this.player.hp <= 0) return;
+        this.player.skill1Cd = 180; // 3 detik
+        this.player.isDashing = true;
+        this.player.dashTimer = 10;
+        Sound.playSwish();
+        showBanner('DASH SLASH! ⚡', selectedJurusan.sec);
+
+        // Area damage di sepanjang dash
+        setTimeout(() => {
+          const enemies = [...this.minions.filter(m => m.team === 'enemy')];
+          if (this.enemyHero.hp > 0) enemies.push(this.enemyHero);
+          enemies.forEach(e => {
+            if (Math.hypot(e.x - this.player.x, e.y - this.player.y) < 65) {
+              e.hp -= 45;
+              this.spawnSlash(e.x, e.y, '#ffd32a');
+              if (e === this.enemyHero && e.hp <= 0) this.onEnemyHeroSlain();
+            }
+          });
+        }, 120);
+      },
+
+      skill2Ultimate() {
+        if (this.player.skill2Cd > 0 || this.player.hp <= 0) return;
+        this.player.skill2Cd = 420; // 7 detik
+        Sound.playGoal();
+        showBanner('METEOR SLAM!! ☄️💥', '#ffd32a');
+        spawnConfetti(this.player.x, this.player.y, 45);
+
+        // Ledakan besar di sekitar player radius 90px
+        const enemies = [...this.minions.filter(m => m.team === 'enemy')];
+        if (this.enemyHero.hp > 0) enemies.push(this.enemyHero);
+        if (this.enemyTurret.hp > 0) enemies.push(this.enemyTurret);
+        else if (this.enemyBase.hp > 0) enemies.push(this.enemyBase);
+
+        enemies.forEach(e => {
+          if (Math.hypot(e.x - this.player.x, e.y - this.player.y) < 95) {
+            e.hp -= 75 + this.player.level * 10;
+            this.spawnSlash(e.x, e.y, '#ff4757');
+            if (e === this.enemyHero && e.hp <= 0) this.onEnemyHeroSlain();
+          }
+        });
+      },
+
+      onEnemyHeroSlain() {
+        this.enemyHero.hp = 0;
+        this.enemyHero.respawnTimer = 600; // 10 detik
+        this.player.kills++;
+        this.player.level++;
+        this.player.maxHp += 25;
+        this.player.hp = this.player.maxHp;
+        score += 50;
+        updateHUD();
+
+        if (!this.firstBlood) {
+          this.firstBlood = true;
+          showBanner('FIRST BLOOD!! 🩸⚡', '#ff4757');
+          Sound.playWhistle(true);
+        } else {
+          showBanner('AN ENEMY HAS BEEN SLAIN! ⚔️', '#2ed573');
+          Sound.playGoal();
+        }
+      },
+
+      onPlayerDeath() {
+        this.player.hp = 0;
+        showBanner('YOU HAVE BEEN SLAIN! 💀', '#e74c3c');
+        Sound.playBlock();
+        setTimeout(() => {
+          this.player.hp = this.player.maxHp;
+          this.player.x = this.playerBase.x;
+          this.player.y = this.playerBase.y - 20;
+          showBanner('RESPAWN DI BASE! 🛡️', '#70a1ff');
+        }, 3000);
+      },
+
+      onVictory() {
+        Sound.playWhistle(true);
+        score += 100;
+        endMatch('MINI MOBA ARENA', score, `VICTORY! Hancurkan Base Musuh (${this.player.kills} Kills)`, 'moba');
+        document.getElementById('moba-controls').classList.add('hidden');
+      const sc = document.getElementById('softball-controls'); if (sc) sc.classList.add('hidden');
+      document.getElementById('softball-controls').classList.add('hidden');
+      },
+
+      onDefeat() {
+        Sound.playBlock();
+        endMatch('MINI MOBA ARENA', score, `DEFEAT! Basemu Hancur`, 'moba');
+        document.getElementById('moba-controls').classList.add('hidden');
+      const sc = document.getElementById('softball-controls'); if (sc) sc.classList.add('hidden');
+      document.getElementById('softball-controls').classList.add('hidden');
+      },
+
+      spawnBullet(x, y, tx, ty, color, r = 3.5) {
+        this.projectiles.push({ x, y, tx, ty, color, r, progress: 0 });
+      },
+
+      spawnSlash(x, y, color) {
+        this.slashEffects.push({ x, y, color, alpha: 1, scale: 0.5 });
+      },
+
+      updateEffects() {
+        for (let i = this.projectiles.length - 1; i >= 0; i--) {
+          const p = this.projectiles[i];
+          p.progress += 0.12;
+          p.x += (p.tx - p.x) * 0.25;
+          p.y += (p.ty - p.y) * 0.25;
+          if (p.progress >= 1 || Math.hypot(p.tx - p.x, p.ty - p.y) < 6) this.projectiles.splice(i, 1);
+        }
+
+        for (let i = this.slashEffects.length - 1; i >= 0; i--) {
+          const s = this.slashEffects[i];
+          s.alpha -= 0.08;
+          s.scale += 0.08;
+          if (s.alpha <= 0) this.slashEffects.splice(i, 1);
+        }
+      },
+
+      draw() {
+        // 1. ARENA LANE BACKGROUND (Tanah + Rumput Bush)
+        ctx.fillStyle = '#1e272e';
+        ctx.fillRect(0, 0, W, H);
+
+        // Rumput Hijau Sisi Kiri & Kanan (Bush)
+        ctx.fillStyle = '#10ac84';
+        ctx.fillRect(0, 0, W * 0.2, H);
+        ctx.fillRect(W * 0.8, 0, W * 0.2, H);
+
+        // Sungai Tengah (River)
+        ctx.fillStyle = '#227093';
+        ctx.fillRect(W * 0.2, H * 0.47, W * 0.6, H * 0.06);
+
+        // Lane Jalanan Tanah
+        ctx.fillStyle = '#2f3542';
+        ctx.fillRect(W * 0.2, 0, W * 0.6, H);
+
+        // River water ripples
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+        ctx.fillRect(W * 0.2, H * 0.49, W * 0.6, 3);
+
+        // 2. BASES & TURRETS
+        this.drawStructure(this.enemyBase, '#ff4757', 'NEXUS LAWAN', true);
+        this.drawStructure(this.enemyTurret, '#ee5253', 'TURRET', false);
+        this.drawStructure(this.playerTurret, selectedJurusan.color, 'TURRET', false);
+        this.drawStructure(this.playerBase, selectedJurusan.sec, 'BASE SMKN 6', true);
+
+        // Turret attack radius indicator (subtle)
+        if (this.enemyTurret.hp > 0) {
+          ctx.strokeStyle = 'rgba(255, 71, 87, 0.18)';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath(); ctx.arc(this.enemyTurret.x, this.enemyTurret.y, this.enemyTurret.range, 0, Math.PI * 2); ctx.stroke();
+        }
+
+        // 3. MINIONS
+        this.minions.forEach(m => {
+          ctx.fillStyle = m.team === 'player' ? '#70a1ff' : '#ff6b6b';
+          ctx.beginPath(); ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2); ctx.fill();
+          ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.stroke();
+
+          // HP bar minion
+          const hpPct = Math.max(0, m.hp / m.maxHp);
+          ctx.fillStyle = '#333'; ctx.fillRect(m.x - 12, m.y - 14, 24, 3);
+          ctx.fillStyle = m.team === 'player' ? '#2ed573' : '#ff4757'; ctx.fillRect(m.x - 12, m.y - 14, 24 * hpPct, 3);
+        });
+
+        // 4. ENEMY HERO (Merah Slayer)
+        if (this.enemyHero.hp > 0) {
+          const eh = this.enemyHero;
+          ctx.fillStyle = '#ff4757';
+          ctx.beginPath(); ctx.arc(eh.x, eh.y, eh.r, 0, Math.PI * 2); ctx.fill();
+          ctx.strokeStyle = '#c0392b'; ctx.lineWidth = 3; ctx.stroke();
+
+          // Tanduk / Helm musuh
+          ctx.fillStyle = '#2c3e50';
+          ctx.beginPath(); ctx.arc(eh.x, eh.y - 6, 8, 0, Math.PI * 2); ctx.fill();
+
+          // HP Bar Enemy Hero
+          this.drawHpBar(eh.x, eh.y - 28, eh.hp, eh.maxHp, '#ff4757', 'BOT SLAYER');
+        }
+
+        // 5. PLAYER HERO (Jersey Jurusan)
+        if (this.player.hp > 0) {
+          const p = this.player;
+          ctx.save();
+          // Bayangan
+          ctx.fillStyle = 'rgba(0,0,0,0.35)';
+          ctx.beginPath(); ctx.ellipse(p.x, p.y + 16, p.r * 1.1, p.r * 0.45, 0, 0, Math.PI * 2); ctx.fill();
+
+          // Hero Body (Sesuai Warna Jersey Jurusan)
+          ctx.fillStyle = selectedJurusan.color;
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+          ctx.strokeStyle = selectedJurusan.sec; ctx.lineWidth = 3; ctx.stroke();
+
+          // Simbol Jurusan / Kepala Hero
+          ctx.fillStyle = '#ffffff';
+          ctx.font = 'bold 12px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.fillText(selectedJurusan.num, p.x, p.y);
+
+          // Pedang / Weapon di tangan
+          const swordX = p.x + p.dirX * 22;
+          const swordY = p.y + p.dirY * 22;
+          ctx.strokeStyle = '#ffd32a'; ctx.lineWidth = 4;
+          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(swordX, swordY); ctx.stroke();
+
+          // Level badge & HP bar
+          this.drawHpBar(p.x, p.y - 28, p.hp, p.maxHp, '#2ed573', `Lv.${p.level} ${selectedJurusan.name}`);
+          ctx.restore();
+        }
+
+        // 6. PROJECTILES & SLASH
+        this.projectiles.forEach(pr => {
+          ctx.fillStyle = pr.color;
+          ctx.beginPath(); ctx.arc(pr.x, pr.y, pr.r, 0, Math.PI * 2); ctx.fill();
+        });
+
+        this.slashEffects.forEach(s => {
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, s.alpha);
+          ctx.strokeStyle = s.color;
+          ctx.lineWidth = 4;
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, 22 * s.scale, 0, Math.PI * 1.5);
+          ctx.stroke();
+          ctx.restore();
+        });
+
+        // 7. VIRTUAL JOYSTICK OVERLAY (Saat disentuh)
+        if (this.joystick.active) {
+          ctx.save();
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+          ctx.lineWidth = 3;
+          ctx.beginPath(); ctx.arc(this.joystick.baseX, this.joystick.baseY, 40, 0, Math.PI * 2); ctx.stroke();
+
+          ctx.fillStyle = selectedJurusan.color;
+          ctx.beginPath(); ctx.arc(this.joystick.curX, this.joystick.curY, 20, 0, Math.PI * 2); ctx.fill();
+          ctx.restore();
+        }
+      },
+
+      drawStructure(struct, color, label, isBase) {
+        if (struct.hp <= 0) return;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        if (isBase) {
+          ctx.roundRect(struct.x - struct.r, struct.y - struct.r, struct.r * 2, struct.r * 2, 10);
+        } else {
+          ctx.arc(struct.x, struct.y, struct.r, 0, Math.PI * 2);
+        }
+        ctx.fill();
+        ctx.strokeStyle = '#fff'; ctx.lineWidth = 2.5; ctx.stroke();
+
+        this.drawHpBar(struct.x, struct.y - struct.r - 12, struct.hp, struct.maxHp, color, label);
+      },
+
+      drawHpBar(x, y, hp, maxHp, color, label) {
+        const barW = 44, barH = 5;
+        const pct = Math.max(0, hp / maxHp);
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        ctx.fillRect(x - barW / 2, y, barW, barH);
+        ctx.fillStyle = color;
+        ctx.fillRect(x - barW / 2, y, barW * pct, barH);
+        ctx.strokeStyle = '#fff'; ctx.lineWidth = 0.8;
+        ctx.strokeRect(x - barW / 2, y, barW, barH);
+
+        if (label) {
+          ctx.fillStyle = '#fff';
+          ctx.font = 'bold 9px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(label, x, y - 3);
+        }
+      }
+    };
+
+
+    /* ==========================================================================
+       CABOR 1: SEPAK BOLA PENALTI
+       ========================================================================== */
+    const Soccer = {
+      ball: { x: 0, y: 0, r: 24, vx: 0, vy: 0, scale: 1, state: 'ready' },
+      originBall: { x: 0, y: 0 },
+      drag: { active: false, curX: 0, curY: 0 },
+      goal: { x: 0, y: 0, w: 0, h: 0 },
+      keeper: { x: 0, y: 0, w: 54, h: 72, vx: 3.2, state: 'patrol' },
+      goals: 0,
+
+      init() {
+        this.goals = 0;
+        this.resetTurn();
+      },
+
+      resetTurn() {
+        this.originBall.x = W / 2;
+        this.originBall.y = H * 0.78;
+        this.ball.x = this.originBall.x;
+        this.ball.y = this.originBall.y;
+        this.ball.vx = 0;
+        this.ball.vy = 0;
+        this.ball.scale = 1;
+        this.ball.state = 'ready';
+
+        this.goal.w = W * 0.78;
+        this.goal.h = H * 0.22;
+        this.goal.x = (W - this.goal.w) / 2;
+        this.goal.y = H * 0.16;
+
+        this.keeper.x = W / 2;
+        this.keeper.y = this.goal.y + this.goal.h - 15;
+        this.keeper.vx = (Math.random() > 0.5 ? 1 : -1) * 3.4;
+      },
+
+      update() {
+        this.keeper.x += this.keeper.vx;
+        const leftBound = this.goal.x + 35;
+        const rightBound = this.goal.x + this.goal.w - 35;
+        if (this.keeper.x < leftBound || this.keeper.x > rightBound) this.keeper.vx *= -1;
+
+        if (this.ball.state === 'flying') {
+          this.ball.x += this.ball.vx;
+          this.ball.y += this.ball.vy;
+          this.ball.scale -= 0.022;
+          if (this.ball.scale < 0.55) this.ball.scale = 0.55;
+
+          if (this.ball.y <= this.goal.y + this.goal.h) this.evaluateShot();
+        }
+      },
+
+      evaluateShot() {
+        this.ball.state = 'evaluated';
+        const inGoalX = this.ball.x >= this.goal.x + 15 && this.ball.x <= this.goal.x + this.goal.w - 15;
+        const inGoalY = this.ball.y >= this.goal.y + 10 && this.ball.y <= this.goal.y + this.goal.h;
+        const distToKeeper = Math.hypot(this.ball.x - this.keeper.x, this.ball.y - this.keeper.y);
+
+        if (distToKeeper < 46) {
+          Sound.playBlock();
+          showBanner('DITEPAKK KIPER! 🧤', '#e74c3c');
+          this.ball.vx = (Math.random() - 0.5) * 5;
+          this.ball.vy = 4;
+        } else if (inGoalX && inGoalY) {
+          Sound.playGoal();
+          score += 20;
+          this.goals++;
+          updateHUD();
+          showBanner(`GOOOL!! ${selectedJurusan.name} ⚽🔥`, selectedJurusan.color);
+          spawnConfetti(this.ball.x, this.ball.y, 35);
+        } else {
+          Sound.playBlock();
+          showBanner('MELESET! 💨', '#ffa502');
+        }
+
+        attempts++;
+        setTimeout(() => {
+          if (attempts >= MAX_ATTEMPTS) {
+            endMatch('SEPAK BOLA PENALTI', score, `${this.goals} Gol dari ${MAX_ATTEMPTS} Tendangan`, 'soccer');
+          } else {
+            this.resetTurn();
+          }
+        }, 1250);
+      },
+
+      draw() {
+        ctx.fillStyle = '#20bf6b';
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = '#26de81';
+        const stripeH = H / 8;
+        for (let i = 0; i < 8; i += 2) ctx.fillRect(0, i * stripeH, W, stripeH);
+
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(this.goal.x - 20, this.goal.y + 30, this.goal.w + 40, H * 0.45);
+
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+        ctx.fillRect(this.goal.x, this.goal.y, this.goal.w, this.goal.h);
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 8;
+        ctx.strokeRect(this.goal.x, this.goal.y, this.goal.w, this.goal.h);
+
+        // Kiper
+        const kx = this.keeper.x, ky = this.keeper.y;
+        ctx.fillStyle = '#ffd32a';
+        ctx.beginPath(); ctx.roundRect(kx - 18, ky - 20, 36, 42, 8); ctx.fill();
+        ctx.fillStyle = '#ffbe76';
+        ctx.beginPath(); ctx.arc(kx, ky - 34, 15, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#ff6b6b';
+        ctx.beginPath(); ctx.arc(kx - 26, ky - 6, 11, 0, Math.PI * 2); ctx.arc(kx + 26, ky - 6, 11, 0, Math.PI * 2); ctx.fill();
+
+        // Aim line
+        if (this.drag.active && this.ball.state === 'ready') {
+          const dx = this.originBall.x - this.drag.curX;
+          const dy = this.originBall.y - this.drag.curY;
+          ctx.save();
+          ctx.setLineDash([8, 8]);
+          ctx.strokeStyle = selectedJurusan.color;
+          ctx.lineWidth = 4;
+          ctx.beginPath();
+          ctx.moveTo(this.originBall.x, this.originBall.y);
+          ctx.lineTo(this.originBall.x + dx * 2.5, this.originBall.y + dy * 2.5);
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        // Ball
+        const r = this.ball.r * this.ball.scale;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath(); ctx.arc(this.ball.x, this.ball.y, r, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#2f3542'; ctx.lineWidth = 2; ctx.stroke();
+        ctx.fillStyle = '#2f3542';
+        ctx.beginPath(); ctx.arc(this.ball.x, this.ball.y, r * 0.35, 0, Math.PI * 2); ctx.fill();
+      },
+
+      onTouchStart(x, y) {
+        if (this.ball.state !== 'ready') return;
+        if (Math.hypot(x - this.ball.x, y - this.ball.y) < this.ball.r * 2.5) {
+          this.drag.active = true;
+          this.drag.curX = x; this.drag.curY = y;
+        }
+      },
+      onTouchMove(x, y) { if (this.drag.active) { this.drag.curX = x; this.drag.curY = y; } },
+      onTouchEnd() {
+        if (!this.drag.active) return;
+        this.drag.active = false;
+        const dx = this.originBall.x - this.drag.curX;
+        const dy = this.originBall.y - this.drag.curY;
+        const p = Math.hypot(dx, dy);
+        if (p > 25) {
+          Sound.playKick();
+          this.ball.state = 'flying';
+          const normPower = Math.min(p * 0.16, 18);
+          const angle = Math.atan2(dy, dx);
+          this.ball.vx = Math.cos(angle) * normPower;
+          this.ball.vy = Math.sin(angle) * normPower;
+        }
+      }
+    };
+
+    /* ==========================================================================
+       CABOR 2: BASKETBALL SLAM
+       ========================================================================== */
+    const Basket = {
+      ball: { x: 0, y: 0, r: 22, vx: 0, vy: 0, state: 'ready' },
+      originBall: { x: 0, y: 0 },
+      drag: { active: false, curX: 0, curY: 0 },
+      hoop: { x: 0, y: 0, r: 28, vx: 1.8 },
+      baskets: 0,
+      gravity: 0.42,
+
+      init() {
+        this.baskets = 0;
+        this.resetTurn();
+      },
+
+      resetTurn() {
+        this.originBall.x = W * 0.28;
+        this.originBall.y = H * 0.76;
+        this.ball.x = this.originBall.x;
+        this.ball.y = this.originBall.y;
+        this.ball.vx = 0;
+        this.ball.vy = 0;
+        this.ball.state = 'ready';
+
+        this.hoop.x = W * 0.78;
+        this.hoop.y = H * 0.32;
+      },
+
+      update() {
+        this.hoop.x += this.hoop.vx;
+        if (this.hoop.x > W * 0.88 || this.hoop.x < W * 0.68) this.hoop.vx *= -1;
+
+        if (this.ball.state === 'flying') {
+          this.ball.x += this.ball.vx;
+          this.ball.y += this.ball.vy;
+          this.ball.vy += this.gravity;
+
+          const boardX = this.hoop.x + this.hoop.r + 6;
+          if (this.ball.x + this.ball.r >= boardX && this.ball.x - this.ball.r <= boardX + 12) {
+            if (this.ball.y >= this.hoop.y - 50 && this.ball.y <= this.hoop.y + 35) {
+              this.ball.vx = -Math.abs(this.ball.vx) * 0.65;
+              this.ball.x = boardX - this.ball.r;
+              Sound.playBlock();
+            }
+          }
+
+          if (this.ball.vy > 0 && Math.abs(this.ball.x - this.hoop.x) < this.hoop.r - 4) {
+            if (this.ball.y >= this.hoop.y - 10 && this.ball.y <= this.hoop.y + 20) {
+              this.scoreGoal();
+            }
+          }
+
+          if (this.ball.y > H + 50 || this.ball.x > W + 60 || this.ball.x < -60) this.endTurn(false);
+        }
+      },
+
+      scoreGoal() {
+        if (this.ball.state === 'scored') return;
+        this.ball.state = 'scored';
+        Sound.playSwish();
+        score += 20;
+        this.baskets++;
+        updateHUD();
+        showBanner(`3-POIN!! ${selectedJurusan.name} 🏀✨`, '#ffa502');
+        spawnConfetti(this.hoop.x, this.hoop.y, 35);
+        this.endTurn(true);
+      },
+
+      endTurn(scored) {
+        if (this.ball.state === 'finished') return;
+        this.ball.state = 'finished';
+        attempts++;
+        setTimeout(() => {
+          if (attempts >= MAX_ATTEMPTS) {
+            endMatch('BASKETBALL SLAM', score, `${this.baskets} Masuk dari ${MAX_ATTEMPTS} Tembakan`, 'basket');
+          } else {
+            this.resetTurn();
+          }
+        }, 1200);
+      },
+
+      draw() {
+        ctx.fillStyle = '#d35400';
+        ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = '#e67e22';
+        ctx.fillRect(0, H * 0.7, W, H * 0.3);
+
+        const hx = this.hoop.x, hy = this.hoop.y;
+        const boardX = hx + this.hoop.r + 6;
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(boardX, hy - 60, 12, 90);
+        ctx.strokeStyle = '#e74c3c';
+        ctx.lineWidth = 5;
+        ctx.beginPath(); ctx.ellipse(hx, hy, this.hoop.r, 8, 0, 0, Math.PI * 2); ctx.stroke();
+
+        if (this.drag.active && this.ball.state === 'ready') {
+          const dx = this.originBall.x - this.drag.curX;
+          const dy = this.originBall.y - this.drag.curY;
+          let simX = this.originBall.x, simY = this.originBall.y;
+          let simVx = dx * 0.16, simVy = dy * 0.16;
+          ctx.fillStyle = '#ffd32a';
+          for (let t = 0; t < 20; t++) {
+            simX += simVx; simY += simVy; simVy += this.gravity;
+            ctx.beginPath(); ctx.arc(simX, simY, 4 - t * 0.12, 0, Math.PI * 2); ctx.fill();
+          }
+        }
+
+        ctx.fillStyle = '#e67e22';
+        ctx.beginPath(); ctx.arc(this.ball.x, this.ball.y, this.ball.r, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 2.5; ctx.stroke();
+      },
+
+      onTouchStart(x, y) {
+        if (this.ball.state !== 'ready') return;
+        if (Math.hypot(x - this.ball.x, y - this.ball.y) < this.ball.r * 2.5) {
+          this.drag.active = true;
+          this.drag.curX = x; this.drag.curY = y;
+        }
+      },
+      onTouchMove(x, y) { if (this.drag.active) { this.drag.curX = x; this.drag.curY = y; } },
+      onTouchEnd() {
+        if (!this.drag.active) return;
+        this.drag.active = false;
+        const dx = this.originBall.x - this.drag.curX;
+        const dy = this.originBall.y - this.drag.curY;
+        if (Math.hypot(dx, dy) > 25) {
+          Sound.playKick();
+          this.ball.state = 'flying';
+          this.ball.vx = dx * 0.16;
+          this.ball.vy = dy * 0.16;
+        }
+      }
+    };
+
+    /* ==========================================================================
+       CABOR 3: BILLIARD POOL
+       ========================================================================== */
+    const Pool = {
+      whiteBall: { x: 0, y: 0, r: 16, vx: 0, vy: 0 },
+      targetBalls: [],
+      pockets: [],
+      table: { x: 0, y: 0, w: 0, h: 0 },
+      drag: { active: false, curX: 0, curY: 0 },
+      potted: 0,
+      friction: 0.982,
+
+      init() {
+        this.potted = 0;
+        this.table.w = W * 0.88;
+        this.table.h = H * 0.58;
+        this.table.x = (W - this.table.w) / 2;
+        this.table.y = H * 0.22;
+
+        const tx = this.table.x, ty = this.table.y, tw = this.table.w, th = this.table.h;
+        this.pockets = [
+          { x: tx + 12, y: ty + 12, r: 22 },
+          { x: tx + tw - 12, y: ty + 12, r: 22 },
+          { x: tx + 12, y: ty + th / 2, r: 20 },
+          { x: tx + tw - 12, y: ty + th / 2, r: 20 },
+          { x: tx + 12, y: ty + th - 12, r: 22 },
+          { x: tx + tw - 12, y: ty + th - 12, r: 22 }
+        ];
+
+        this.resetBalls();
+      },
+
+      resetBalls() {
+        this.whiteBall.x = this.table.x + this.table.w / 2;
+        this.whiteBall.y = this.table.y + this.table.h * 0.78;
+        this.whiteBall.vx = 0;
+        this.whiteBall.vy = 0;
+
+        const cy = this.table.y + this.table.h * 0.32;
+        const cx = this.table.x + this.table.w / 2;
+        const colors = [selectedJurusan.color, '#ff4757', '#ffd32a', '#2ed573'];
+        this.targetBalls = [
+          { x: cx, y: cy, r: 16, vx: 0, vy: 0, color: colors[0], id: 1 },
+          { x: cx - 18, y: cy - 28, r: 16, vx: 0, vy: 0, color: colors[1], id: 2 },
+          { x: cx + 18, y: cy - 28, r: 16, vx: 0, vy: 0, color: colors[2], id: 3 },
+          { x: cx, y: cy - 56, r: 16, vx: 0, vy: 0, color: colors[3], id: 4 }
+        ];
+      },
+
+      update() {
+        const balls = [this.whiteBall, ...this.targetBalls];
+        const tx = this.table.x + 20, ty = this.table.y + 20;
+        const rx = this.table.x + this.table.w - 20, by = this.table.y + this.table.h - 20;
+
+        balls.forEach(b => {
+          b.x += b.vx;
+          b.y += b.vy;
+          b.vx *= this.friction;
+          b.vy *= this.friction;
+          if (Math.hypot(b.vx, b.vy) < 0.05) { b.vx = 0; b.vy = 0; }
+
+          if (b.x - b.r < tx) { b.x = tx + b.r; b.vx *= -0.8; Sound.playPoolClack(); }
+          if (b.x + b.r > rx) { b.x = rx - b.r; b.vx *= -0.8; Sound.playPoolClack(); }
+          if (b.y - b.r < ty) { b.y = ty + b.r; b.vy *= -0.8; Sound.playPoolClack(); }
+          if (b.y + b.r > by) { b.y = by - b.r; b.vy *= -0.8; Sound.playPoolClack(); }
+
+          this.pockets.forEach(pkt => {
+            if (Math.hypot(b.x - pkt.x, b.y - pkt.y) < pkt.r) {
+              if (b === this.whiteBall) {
+                Sound.playBlock();
+                showBanner('SCRATCH! 😱', '#e74c3c');
+                setTimeout(() => {
+                  this.whiteBall.x = this.table.x + this.table.w / 2;
+                  this.whiteBall.y = this.table.y + this.table.h * 0.78;
+                  this.whiteBall.vx = 0; this.whiteBall.vy = 0;
+                }, 500);
+              } else {
+                Sound.playGoal();
+                score += 25;
+                this.potted++;
+                updateHUD();
+                showBanner('BOLA MASUK! 🎱✨', '#2ed573');
+                spawnConfetti(pkt.x, pkt.y, 25);
+                b.x = -999; b.y = -999; b.vx = 0; b.vy = 0;
+              }
+            }
+          });
+        });
+
+        for (let i = 0; i < balls.length; i++) {
+          for (let j = i + 1; j < balls.length; j++) {
+            const b1 = balls[i], b2 = balls[j];
+            if (b1.x < 0 || b2.x < 0) continue;
+            const dx = b2.x - b1.x, dy = b2.y - b1.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < b1.r + b2.r && dist > 0) {
+              const nx = dx / dist, ny = dy / dist;
+              const kx = b1.vx - b2.vx, ky = b1.vy - b2.vy;
+              const p = 2 * (nx * kx + ny * ky) / 2;
+              b1.vx -= p * nx; b1.vy -= p * ny;
+              b2.vx += p * nx; b2.vy += p * ny;
+              Sound.playPoolClack();
+            }
+          }
+        }
+
+        const remaining = this.targetBalls.filter(b => b.x > 0).length;
+        if (remaining === 0) {
+          endMatch('BILLIARD 8-BALL', score, `Sapu Bersih ${this.potted} Bola!`, 'pool');
+        }
+      },
+
+      draw() {
+        ctx.fillStyle = '#4a2810';
+        ctx.beginPath();
+        ctx.roundRect(this.table.x, this.table.y, this.table.w, this.table.h, 24);
+        ctx.fill();
+
+        ctx.fillStyle = '#0f7138';
+        ctx.fillRect(this.table.x + 18, this.table.y + 18, this.table.w - 36, this.table.h - 36);
+
+        ctx.fillStyle = '#111';
+        this.pockets.forEach(pkt => {
+          ctx.beginPath(); ctx.arc(pkt.x, pkt.y, pkt.r, 0, Math.PI * 2); ctx.fill();
+        });
+
+        this.targetBalls.forEach(b => {
+          if (b.x > 0) {
+            ctx.fillStyle = b.color;
+            ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#fff';
+            ctx.beginPath(); ctx.arc(b.x, b.y, b.r * 0.45, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#000'; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.fillText(b.id, b.x, b.y);
+          }
+        });
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath(); ctx.arc(this.whiteBall.x, this.whiteBall.y, this.whiteBall.r, 0, Math.PI * 2); ctx.fill();
+
+        if (this.drag.active) {
+          const dx = this.whiteBall.x - this.drag.curX;
+          const dy = this.whiteBall.y - this.drag.curY;
+          const angle = Math.atan2(dy, dx);
+          const pullDist = Math.min(Math.hypot(dx, dy), 80);
+
+          ctx.save();
+          ctx.setLineDash([6, 6]);
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.moveTo(this.whiteBall.x, this.whiteBall.y);
+          ctx.lineTo(this.whiteBall.x + Math.cos(angle) * 160, this.whiteBall.y + Math.sin(angle) * 160);
+          ctx.stroke();
+
+          const stickBackX = this.whiteBall.x - Math.cos(angle) * (this.whiteBall.r + pullDist);
+          const stickBackY = this.whiteBall.y - Math.sin(angle) * (this.whiteBall.r + pullDist);
+          ctx.strokeStyle = '#f5cd79'; ctx.lineWidth = 6;
+          ctx.beginPath(); ctx.moveTo(stickBackX, stickBackY);
+          ctx.lineTo(stickBackX - Math.cos(angle) * 130, stickBackY - Math.sin(angle) * 130);
+          ctx.stroke();
+          ctx.restore();
+        }
+      },
+
+      onTouchStart(x, y) {
+        if (Math.hypot(this.whiteBall.vx, this.whiteBall.vy) > 0.1) return;
+        if (Math.hypot(x - this.whiteBall.x, y - this.whiteBall.y) < this.whiteBall.r * 2.8) {
+          this.drag.active = true;
+          this.drag.curX = x; this.drag.curY = y;
+        }
+      },
+      onTouchMove(x, y) { if (this.drag.active) { this.drag.curX = x; this.drag.curY = y; } },
+      onTouchEnd() {
+        if (!this.drag.active) return;
+        this.drag.active = false;
+        const dx = this.whiteBall.x - this.drag.curX;
+        const dy = this.whiteBall.y - this.drag.curY;
+        const power = Math.hypot(dx, dy);
+        if (power > 15) {
+          Sound.playPoolClack();
+          const norm = Math.min(power * 0.18, 16);
+          const angle = Math.atan2(dy, dx);
+          this.whiteBall.vx = Math.cos(angle) * norm;
+          this.whiteBall.vy = Math.sin(angle) * norm;
+          attempts++;
+        }
+      }
+    };
+
+    /* ==========================================================================
+       CABOR 4: BOLA VOLI
+       ========================================================================== */
+    const Volley = {
+      ball: { x: 0, y: 0, r: 20, vx: 0, vy: 0, state: 'ready' },
+      netY: 0,
+      blocker: { x: 0, y: 0, w: 70, h: 20, vx: 3 },
+      drag: { active: false, curX: 0, curY: 0 },
+      spikes: 0,
+
+      init() {
+        this.spikes = 0;
+        this.netY = H * 0.45;
+        this.blocker.x = W / 2;
+        this.blocker.y = this.netY - 25;
+        this.resetTurn();
+      },
+
+      resetTurn() {
+        this.ball.x = W / 2;
+        this.ball.y = H * 0.76;
+        this.ball.vx = 0;
+        this.ball.vy = 0;
+        this.ball.state = 'ready';
+      },
+
+      update() {
+        this.blocker.x += this.blocker.vx;
+        if (this.blocker.x < W * 0.25 || this.blocker.x > W * 0.75) this.blocker.vx *= -1;
+
+        if (this.ball.state === 'flying') {
+          this.ball.x += this.ball.vx;
+          this.ball.y += this.ball.vy;
+
+          if (Math.abs(this.ball.y - this.netY) < 12 && Math.abs(this.ball.vx) < 2) {
+            Sound.playBlock();
+            showBanner('NYANGKUT DI NET! 🏐🚫', '#e74c3c');
+            this.ball.state = 'blocked';
+            this.endTurn(false);
+          }
+
+          if (this.ball.y <= this.blocker.y + 15 && this.ball.y >= this.blocker.y - 15) {
+            if (Math.abs(this.ball.x - this.blocker.x) < this.blocker.w / 2) {
+              Sound.playBlock();
+              showBanner('KENA BLOCKING! 🛑', '#e74c3c');
+              this.ball.state = 'blocked';
+              this.endTurn(false);
+            }
+          }
+
+          if (this.ball.y < H * 0.22) {
+            Sound.playGoal();
+            score += 20;
+            this.spikes++;
+            updateHUD();
+            showBanner(`SMASH MASUK!! ${selectedJurusan.name} 🏐⚡`, selectedJurusan.color);
+            spawnConfetti(this.ball.x, this.ball.y, 35);
+            this.ball.state = 'scored';
+            this.endTurn(true);
+          }
+        }
+      },
+
+      endTurn(scored) {
+        attempts++;
+        setTimeout(() => {
+          if (attempts >= MAX_ATTEMPTS) {
+            endMatch('BOLA VOLI SMASH', score, `${this.spikes} Poin Smash dari ${MAX_ATTEMPTS} Umpan`, 'volley');
+          } else {
+            this.resetTurn();
+          }
+        }, 1250);
+      },
+
+      draw() {
+        ctx.fillStyle = '#227093'; ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = '#ff793f'; ctx.fillRect(W * 0.1, H * 0.15, W * 0.8, H * 0.7);
+
+        ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 4;
+        ctx.strokeRect(W * 0.1, H * 0.15, W * 0.8, H * 0.7);
+
+        ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 8;
+        ctx.beginPath(); ctx.moveTo(W * 0.08, this.netY); ctx.lineTo(W * 0.92, this.netY); ctx.stroke();
+
+        const bx = this.blocker.x, by = this.blocker.y;
+        ctx.fillStyle = '#ff5252';
+        ctx.beginPath(); ctx.roundRect(bx - this.blocker.w / 2, by, this.blocker.w, 14, 6); ctx.fill();
+
+        ctx.fillStyle = '#f1f2f6';
+        ctx.beginPath(); ctx.arc(this.ball.x, this.ball.y, this.ball.r, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = selectedJurusan.color; ctx.lineWidth = 4;
+        ctx.beginPath(); ctx.arc(this.ball.x, this.ball.y, this.ball.r * 0.6, 0, Math.PI); ctx.stroke();
+      },
+
+      onTouchStart(x, y) {
+        if (this.ball.state !== 'ready') return;
+        if (Math.hypot(x - this.ball.x, y - this.ball.y) < this.ball.r * 2.5) {
+          this.drag.active = true;
+          this.drag.curX = x; this.drag.curY = y;
+        }
+      },
+      onTouchMove(x, y) { if (this.drag.active) { this.drag.curX = x; this.drag.curY = y; } },
+      onTouchEnd() {
+        if (!this.drag.active) return;
+        this.drag.active = false;
+        const dx = (W / 2) - this.drag.curX;
+        const dy = (H * 0.76) - this.drag.curY;
+        if (Math.hypot(dx, dy) > 20) {
+          Sound.playKick();
+          this.ball.state = 'flying';
+          const p = Math.min(Math.hypot(dx, dy) * 0.17, 18);
+          const a = Math.atan2(dy, dx);
+          this.ball.vx = Math.cos(a) * p;
+          this.ball.vy = Math.sin(a) * p;
+        }
+      }
+    };
+
+    /* ==========================================================================
+       CABOR 5: TENIS MEJA
+       ========================================================================== */
+    const PingPong = {
+      ball: { x: 0, y: 0, r: 12, vx: 0, vy: 0 },
+      playerPaddle: { x: 0, y: 0, w: 74, h: 16 },
+      botPaddle: { x: 0, y: 0, w: 68, h: 14, vx: 3.2 },
+      table: { x: 0, y: 0, w: 0, h: 0 },
+      rallyCount: 0,
+
+      init() {
+        this.rallyCount = 0;
+        this.table.w = W * 0.82;
+        this.table.h = H * 0.62;
+        this.table.x = (W - this.table.w) / 2;
+        this.table.y = H * 0.18;
+
+        this.playerPaddle.x = W / 2;
+        this.playerPaddle.y = this.table.y + this.table.h - 18;
+
+        this.botPaddle.x = W / 2;
+        this.botPaddle.y = this.table.y + 18;
+
+        this.resetTurn();
+      },
+
+      resetTurn() {
+        this.ball.x = W / 2;
+        this.ball.y = this.playerPaddle.y - 30;
+        this.ball.vx = (Math.random() - 0.5) * 4;
+        this.ball.vy = -5.5;
+      },
+
+      update() {
+        const botSpeed = 3.4;
+        if (this.botPaddle.x < this.ball.x - 10) this.botPaddle.x += botSpeed;
+        else if (this.botPaddle.x > this.ball.x + 10) this.botPaddle.x -= botSpeed;
+
+        this.ball.x += this.ball.vx;
+        this.ball.y += this.ball.vy;
+
+        if (this.ball.x < this.table.x + 15 || this.ball.x > this.table.x + this.table.w - 15) {
+          this.ball.vx *= -1;
+          Sound.playPingPong();
+        }
+
+        if (this.ball.y <= this.botPaddle.y + 12 && this.ball.vy < 0) {
+          if (Math.abs(this.ball.x - this.botPaddle.x) < this.botPaddle.w / 2 + 10) {
+            this.ball.vy = Math.abs(this.ball.vy);
+            this.ball.vx += (Math.random() - 0.5) * 2;
+            Sound.playPingPong();
+          }
+        }
+
+        if (this.ball.y >= this.playerPaddle.y - 12 && this.ball.vy > 0) {
+          if (Math.abs(this.ball.x - this.playerPaddle.x) < this.playerPaddle.w / 2 + 10) {
+            this.ball.vy = -Math.abs(this.ball.vy);
+            const hitOffset = (this.ball.x - this.playerPaddle.x) / (this.playerPaddle.w / 2);
+            this.ball.vx = hitOffset * 5.5;
+            Sound.playPingPong();
+            this.rallyCount++;
+            score += 10;
+            updateHUD();
+            showBanner(`RALLY ${this.rallyCount}x! 🏓🔥`, '#2ed573');
+          }
+        }
+
+        if (this.ball.y < this.table.y - 20) {
+          Sound.playGoal();
+          score += 25;
+          updateHUD();
+          showBanner('SMASH MENEMBUS BOT! 🏓✨', '#ffd32a');
+          spawnConfetti(this.ball.x, this.table.y + 20, 25);
+          attempts++;
+          this.checkMatchOver();
+        }
+
+        if (this.ball.y > this.table.y + this.table.h + 20) {
+          Sound.playBlock();
+          showBanner('BOLA LEPAS! 💨', '#e74c3c');
+          attempts++;
+          this.checkMatchOver();
+        }
+      },
+
+      checkMatchOver() {
+        if (attempts >= MAX_ATTEMPTS) {
+          endMatch('TENIS MEJA RALLY', score, `${this.rallyCount}x Pukulan Beruntun`, 'pingpong');
+        } else {
+          this.resetTurn();
+        }
+      },
+
+      draw() {
+        ctx.fillStyle = '#0984e3';
+        ctx.fillRect(this.table.x, this.table.y, this.table.w, this.table.h);
+        ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 4;
+        ctx.strokeRect(this.table.x, this.table.y, this.table.w, this.table.h);
+
+        const netY = this.table.y + this.table.h / 2;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)'; ctx.lineWidth = 6;
+        ctx.beginPath(); ctx.moveTo(this.table.x - 10, netY); ctx.lineTo(this.table.x + this.table.w + 10, netY); ctx.stroke();
+
+        ctx.fillStyle = '#2d3436';
+        ctx.beginPath();
+        ctx.roundRect(this.botPaddle.x - this.botPaddle.w / 2, this.botPaddle.y - 6, this.botPaddle.w, this.botPaddle.h, 6);
+        ctx.fill();
+
+        ctx.fillStyle = selectedJurusan.color;
+        ctx.beginPath();
+        ctx.roundRect(this.playerPaddle.x - this.playerPaddle.w / 2, this.playerPaddle.y - 8, this.playerPaddle.w, this.playerPaddle.h, 8);
+        ctx.fill();
+
+        ctx.fillStyle = '#fffa65';
+        ctx.beginPath(); ctx.arc(this.ball.x, this.ball.y, this.ball.r, 0, Math.PI * 2); ctx.fill();
+      },
+
+      onTouchMove(x, y) {
+        this.playerPaddle.x = Math.max(this.table.x + this.playerPaddle.w / 2, Math.min(this.table.x + this.table.w - this.playerPaddle.w / 2, x));
+      }
+    };
+
+    /* ==========================================================================
+       CABOR 7: SOFTBALL SLUGGER (HOME RUN DERBY)
+       ========================================================================== */
+    /* ==========================================================================
+       CABOR 7: SOFTBALL SLUGGER (HOME RUN DERBY - FULL INTERACTIVE)
+       ========================================================================== */
+    const Softball = {
+      ball: { x: 0, y: 0, z: 0.35, vx: 0, vy: 0, vz: 0, active: false, hit: false, homeRun: false, rad: 10 },
+      pitcher: { x: 0, y: 0 },
+      batter: { x: 0, y: 0, swing: false, angle: -0.6, progress: 0, targetX: 0, targetY: 0 },
+      strikeZone: { x: 0, y: 0, w: 90, h: 70 },
+      homeRuns: 0,
+      state: 'ready', // 'ready', 'countdown', 'pitching', 'flying', 'finished'
+      countdown: 3,
+      countdownTimer: null,
+      isDragging: false,
+
+      init() {
+        this.homeRuns = 0;
+        this.resetTurn();
+      },
+
+      resetTurn() {
+        this.state = 'ready';
+        this.pitcher.x = W * 0.5;
+        this.pitcher.y = H * 0.28;
+
+        this.strikeZone.w = Math.min(100, W * 0.32);
+        this.strikeZone.h = 80;
+        this.strikeZone.x = W * 0.5 - this.strikeZone.w / 2;
+        this.strikeZone.y = H * 0.68;
+
+        this.batter.targetX = W * 0.5;
+        this.batter.targetY = H * 0.72;
+        this.batter.x = this.batter.targetX - 35;
+        this.batter.y = this.batter.targetY;
+        this.batter.swing = false;
+        this.batter.angle = -0.6;
+        this.batter.progress = 0;
+
+        this.ball = {
+          x: this.pitcher.x,
+          y: this.pitcher.y,
+          z: 0.35,
+          vx: 0,
+          vy: 0,
+          vz: 0,
+          active: false,
+          hit: false,
+          homeRun: false,
+          rad: 10
+        };
+
+        this.countdown = 3;
+        if (this.countdownTimer) clearInterval(this.countdownTimer);
+
+        // Update tombol kontrol UI
+        const btnPitch = document.getElementById('btn-softball-pitch');
+        if (btnPitch) {
+          btnPitch.style.display = 'flex';
+          btnPitch.textContent = '⚾ LEMPAR BOLA!';
+        }
+
+        // Mulai hitung mundur otomatis jika user tidak memencet tombol
+        this.countdownTimer = setInterval(() => {
+          if (currentGame !== 'softball' || this.state !== 'ready') {
+            clearInterval(this.countdownTimer);
+            return;
+          }
+          this.countdown--;
+          if (btnPitch) btnPitch.textContent = `⚾ LEMPAR (${this.countdown}s)`;
+          if (this.countdown <= 0) {
+            clearInterval(this.countdownTimer);
+            this.pitch();
+          }
+        }, 1000);
+      },
+
+      // Fungsi pemain menggeser pemukul / bidikan bat
+      onTouchMove(x, y) {
+        // Batasi geseran bidikan di sekitar strike zone
+        const minX = this.strikeZone.x - 25;
+        const maxX = this.strikeZone.x + this.strikeZone.w + 25;
+        const minY = this.strikeZone.y - 20;
+        const maxY = this.strikeZone.y + this.strikeZone.h + 20;
+
+        this.batter.targetX = Math.max(minX, Math.min(maxX, x));
+        this.batter.targetY = Math.max(minY, Math.min(maxY, y));
+        this.batter.x = this.batter.targetX - 35;
+        this.batter.y = this.batter.targetY;
+      },
+
+      pitch() {
+        if (this.state === 'pitching' || this.state === 'flying') return;
+        if (this.countdownTimer) clearInterval(this.countdownTimer);
+        this.state = 'pitching';
+
+        const btnPitch = document.getElementById('btn-softball-pitch');
+        if (btnPitch) btnPitch.style.display = 'none';
+
+        this.ball.active = true;
+        this.ball.x = this.pitcher.x;
+        this.ball.y = this.pitcher.y;
+        this.ball.z = 0.35;
+
+        // Bola meluncur ke arah strike zone (kecepatan pas ~1.2 detik sampai)
+        const speed = 4.2 + Math.random() * 0.8;
+        const targetX = this.strikeZone.x + this.strikeZone.w * 0.2 + Math.random() * (this.strikeZone.w * 0.6);
+        const targetY = this.strikeZone.y + this.strikeZone.h * 0.5;
+        const frames = (targetY - this.pitcher.y) / speed;
+
+        this.ball.vx = (targetX - this.ball.x) / frames;
+        this.ball.vy = speed;
+        this.ball.vz = (1.2 - 0.35) / frames;
+
+        Sound.playThud();
+        showBanner('BOLA DILEMPAR! BIDIK & AYUN! ⚾', '#ffa502');
+      },
+
+      swing() {
+        if (this.batter.swing) return;
+        this.batter.swing = true;
+        this.batter.progress = 0;
+        Sound.playWhoosh();
+
+        if (this.ball.active && !this.ball.hit && this.state === 'pitching') {
+          // Hitung jarak bola terhadap lingkaran target bat pemain
+          const distToReticle = Math.hypot(this.ball.x - this.batter.targetX, this.ball.y - this.batter.targetY);
+          const dy = Math.abs(this.ball.y - this.batter.targetY);
+
+          if (distToReticle < 28 && dy < 25) {
+            // PERFECT HOME RUN!
+            this.ball.hit = true;
+            this.ball.homeRun = true;
+            this.state = 'flying';
+            this.ball.vy = -14;
+            this.ball.vx = (this.ball.x - this.batter.targetX) * 0.35 + (Math.random() - 0.5) * 4;
+            this.ball.vz = 0.08;
+
+            this.homeRuns++;
+            score += 40;
+            updateHUD();
+            Sound.playGoal();
+            showBanner(`HOME RUN!! 400 FT! 🚀⚾🔥`, selectedJurusan.color);
+            spawnConfetti(this.ball.x, this.ball.y, 40);
+            this.finishTurn(40);
+          } else if (distToReticle < 55 && dy < 48) {
+            // BASE HIT!
+            this.ball.hit = true;
+            this.ball.homeRun = false;
+            this.state = 'flying';
+            this.ball.vy = -9;
+            this.ball.vx = (this.ball.x < W * 0.5 ? -5 : 5) + (Math.random() - 0.5) * 3;
+
+            score += 20;
+            updateHUD();
+            Sound.playDing();
+            showBanner(`BASE HIT!! ⚾✨ (+20)`, '#2ed573');
+            this.finishTurn(20);
+          } else if (distToReticle < 85 && dy < 75) {
+            // FOUL BALL!
+            this.ball.hit = true;
+            this.state = 'flying';
+            this.ball.vy = -4;
+            this.ball.vx = (this.ball.x < W * 0.5 ? -8 : 8);
+
+            score += 5;
+            updateHUD();
+            Sound.playBlock();
+            showBanner(`FOUL BALL! ⚠️ (+5)`, '#ffa502');
+            this.finishTurn(5);
+          } else {
+            // AYUNAN KOSONG / MISSED
+            Sound.playBlock();
+            showBanner(`AYUNAN KOSONG! 💨`, '#e74c3c');
+          }
+        }
+      },
+
+      finishTurn(pts) {
+        attempts++;
+        updateHUD();
+        setTimeout(() => {
+          if (currentGame === 'softball') {
+            if (attempts >= MAX_ATTEMPTS) {
+              endMatch('SOFTBALL SLUGGER', score, `${this.homeRuns}x Home Run`, 'softball');
+            } else {
+              this.resetTurn();
+            }
+          }
+        }, 1600);
+      },
+
+      update() {
+        if (this.batter.swing) {
+          this.batter.progress += 0.18;
+          this.batter.angle = -0.6 + Math.sin(this.batter.progress * Math.PI) * 2.5;
+          if (this.batter.progress >= 1) {
+            this.batter.swing = false;
+            this.batter.angle = -0.6;
+          }
+        }
+
+        if (this.ball.active) {
+          if (this.state === 'pitching') {
+            this.ball.x += this.ball.vx;
+            this.ball.y += this.ball.vy;
+            this.ball.z += this.ball.vz;
+
+            // Jika bola melewati strike zone tanpa kena pukul -> STRIKE!
+            if (this.ball.y > this.strikeZone.y + this.strikeZone.h + 20 && !this.ball.hit) {
+              this.ball.active = false;
+              Sound.playBlock();
+              showBanner(`STRIKE! ❌ (Bola Lewat)`, '#e74c3c');
+              this.finishTurn(0);
+            }
+          } else if (this.state === 'flying') {
+            this.ball.x += this.ball.vx;
+            this.ball.y += this.ball.vy;
+            if (this.ball.homeRun) this.ball.z += 0.05;
+            if (this.ball.y < -40 || this.ball.x < -40 || this.ball.x > W + 40) {
+              this.ball.active = false;
+            }
+          }
+        }
+      },
+
+      draw() {
+        // 1. LAPANGAN RUMPUT & DIAMOND
+        ctx.fillStyle = '#27ae60';
+        ctx.fillRect(0, 0, W, H);
+
+        // Banner Stadion Atas
+        ctx.fillStyle = '#1e272e';
+        ctx.fillRect(0, H * 0.10, W, 26);
+        ctx.fillStyle = '#ffd32a';
+        ctx.font = 'bold 10px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('⭐ SMKN 6 SURABAYA • HOME RUN DERBY 400 FT ⭐', W * 0.5, H * 0.10 + 17);
+
+        // Lapangan Tanah Merah (Infield Diamond)
+        ctx.fillStyle = '#c0392b';
+        ctx.beginPath();
+        ctx.moveTo(W * 0.5, H * 0.24);
+        ctx.lineTo(W * 0.88, H * 0.50);
+        ctx.lineTo(W * 0.5, H * 0.78);
+        ctx.lineTo(W * 0.12, H * 0.50);
+        ctx.closePath();
+        ctx.fill();
+
+        // Rumput Tengah Mound Pitcher
+        ctx.fillStyle = '#2ecc71';
+        ctx.beginPath();
+        ctx.arc(W * 0.5, H * 0.50, 52, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Garis Lapangan Putih
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(W * 0.5, H * 0.75); ctx.lineTo(W * 0.96, H * 0.34);
+        ctx.moveTo(W * 0.5, H * 0.75); ctx.lineTo(W * 0.04, H * 0.34);
+        ctx.stroke();
+
+        // Base 1, 2, 3
+        ctx.fillStyle = '#ffffff';
+        [
+          { x: W * 0.5, y: H * 0.28 },
+          { x: W * 0.82, y: H * 0.50 },
+          { x: W * 0.18, y: H * 0.50 }
+        ].forEach(b => {
+          ctx.beginPath(); ctx.arc(b.x, b.y, 6, 0, Math.PI * 2); ctx.fill();
+        });
+
+        // Home Plate
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.moveTo(W * 0.5, H * 0.74);
+        ctx.lineTo(W * 0.5 + 12, H * 0.75);
+        ctx.lineTo(W * 0.5 + 12, H * 0.78);
+        ctx.lineTo(W * 0.5 - 12, H * 0.78);
+        ctx.lineTo(W * 0.5 - 12, H * 0.75);
+        ctx.closePath();
+        ctx.fill();
+
+        // 2. KOTAK STRIKE ZONE (KUNING PUTUS-PUTUS)
+        ctx.strokeStyle = 'rgba(241, 196, 15, 0.8)';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([5, 4]);
+        ctx.strokeRect(this.strikeZone.x, this.strikeZone.y, this.strikeZone.w, this.strikeZone.h);
+        ctx.setLineDash([]);
+
+        // Label Strike Zone
+        ctx.fillStyle = 'rgba(241, 196, 15, 0.9)';
+        ctx.font = 'bold 9px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('STRIKE ZONE', W * 0.5, this.strikeZone.y - 6);
+
+        // 3. TARGET RETICLE LINGKARAN PEMUKUL (BISA DI-UTHEK-UTHEK!)
+        const rx = this.batter.targetX;
+        const ry = this.batter.targetY;
+
+        ctx.save();
+        ctx.strokeStyle = selectedJurusan.color;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.arc(rx, ry, 26, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Titik Tengah Crosshair
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(rx - 8, ry); ctx.lineTo(rx + 8, ry);
+        ctx.moveTo(rx, ry - 8); ctx.lineTo(rx, ry + 8);
+        ctx.stroke();
+
+        // Teks Petunjuk Bidikan
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 9px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('👆 BIDIKAN BAT', rx, ry + 36);
+        ctx.restore();
+
+        // 4. INDIKATOR TIMING (PUKUL SEKARANG / TUNGGU)
+        if (this.state === 'pitching' && this.ball.active && !this.ball.hit) {
+          const dy = Math.abs(this.ball.y - this.batter.targetY);
+          if (dy < 35) {
+            // FLASH HIJAU: PUKUL SEKARANG!!
+            ctx.fillStyle = '#2ed573';
+            ctx.font = '900 16px "Fredoka One", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('💥 PUKUL SEKARANG!! 💥', W * 0.5, this.strikeZone.y - 24);
+          } else if (this.ball.y < this.batter.targetY) {
+            ctx.fillStyle = '#ffd32a';
+            ctx.font = 'bold 12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('⏳ BOLA MENDEKAT...', W * 0.5, this.strikeZone.y - 24);
+          }
+        } else if (this.state === 'ready') {
+          ctx.fillStyle = '#ffffff';
+          ctx.font = 'bold 11px Arial';
+          ctx.textAlign = 'center';
+          ctx.fillText(`👉 Geser bidikan lingkaran ke bola! Lempar (${this.countdown}s)`, W * 0.5, this.strikeZone.y - 24);
+        }
+
+        // 5. PITCHER BOT
+        ctx.fillStyle = '#d35400';
+        ctx.beginPath(); ctx.arc(this.pitcher.x, this.pitcher.y, 14, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#2c3e50';
+        ctx.beginPath(); ctx.arc(this.pitcher.x, this.pitcher.y - 10, 8, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#e74c3c';
+        ctx.fillRect(this.pitcher.x - 6, this.pitcher.y - 2, 12, 12);
+
+        // 6. BATTER PEMAIN (IKUT POSISI BIDIKAN)
+        const bx = this.batter.x;
+        const by = this.batter.y;
+
+        // Badan Jersey
+        ctx.fillStyle = selectedJurusan.color;
+        ctx.fillRect(bx - 8, by - 6, 16, 18);
+        ctx.strokeStyle = selectedJurusan.sec;
+        ctx.lineWidth = 2;
+        ctx.strokeRect(bx - 8, by - 6, 16, 18);
+
+        // Kepala & Helm
+        ctx.fillStyle = selectedJurusan.color;
+        ctx.beginPath(); ctx.arc(bx, by - 14, 8, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#2d3436';
+        ctx.beginPath(); ctx.arc(bx + 4, by - 14, 4, 0, Math.PI * 2); ctx.fill();
+
+        // Tongkat Bat Baseball
+        ctx.save();
+        ctx.translate(bx + 6, by - 2);
+        ctx.rotate(this.batter.angle);
+        ctx.fillStyle = '#d35400';
+        ctx.fillRect(-3, -34, 6, 34);
+        ctx.fillStyle = '#ecf0f1';
+        ctx.fillRect(-2, -8, 4, 8);
+        ctx.restore();
+
+        // Garis sambung dari Batter ke Lingkaran Bidikan Bat
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([3, 3]);
+        ctx.beginPath();
+        ctx.moveTo(bx + 8, by);
+        ctx.lineTo(rx, ry);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // 7. BOLA SOFTBALL
+        if (this.ball.active) {
+          ctx.save();
+          const rad = Math.max(5, this.ball.rad * this.ball.z);
+
+          // Bayangan bola di tanah
+          ctx.fillStyle = 'rgba(0, 0, 0, 0.25)';
+          ctx.beginPath();
+          ctx.ellipse(this.ball.x, this.ball.y + rad * 1.5, rad * 0.9, rad * 0.4, 0, 0, Math.PI * 2);
+          ctx.fill();
+
+          // Bola Softball Kuning Terang
+          ctx.fillStyle = '#f1c40f';
+          ctx.beginPath(); ctx.arc(this.ball.x, this.ball.y, rad, 0, Math.PI * 2); ctx.fill();
+          ctx.strokeStyle = '#c0392b'; ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.arc(this.ball.x - rad * 0.3, this.ball.y, rad * 0.7, -0.6, 0.6);
+          ctx.arc(this.ball.x + rad * 0.3, this.ball.y, rad * 0.7, Math.PI - 0.6, Math.PI + 0.6);
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        // 8. HUD STATISTIK BAWAH
+        ctx.fillStyle = 'rgba(0,0,0,0.65)';
+        ctx.fillRect(10, H * 0.88, W - 20, 26);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 11px Arial';
+        ctx.textAlign = 'left';
+        ctx.fillText(`⚾ Giliran: ${attempts + 1}/${MAX_ATTEMPTS}`, 20, H * 0.88 + 17);
+        ctx.fillStyle = '#f1c40f';
+        ctx.textAlign = 'right';
+        ctx.fillText(`🚀 Home Run: ${this.homeRuns}x`, W - 20, H * 0.88 + 17);
+      }
+    };
+
+    /* ==========================================================================
+       MAIN LOOP & SCREEN ROUTING
+       ========================================================================== */
+    function gameLoop() {
+      ctx.clearRect(0, 0, W, H);
+
+
+      if (currentGame === 'moba') { Moba.update(); Moba.draw(); }
+      else if (currentGame === 'soccer') { Soccer.update(); Soccer.draw(); }
+      else if (currentGame === 'basket') { Basket.update(); Basket.draw(); }
+      else if (currentGame === 'pool') { Pool.update(); Pool.draw(); }
+      else if (currentGame === 'volley') { Volley.update(); Volley.draw(); }
+      else if (currentGame === 'pingpong') { PingPong.update(); PingPong.draw(); }
+      else if (currentGame === 'softball') { Softball.update(); Softball.draw(); }
+
+      updateParticles();
+      drawParticles();
+
+      requestAnimationFrame(gameLoop);
+    }
+    requestAnimationFrame(gameLoop);
+
+    function renderJerseyGrid() {
+      const container = document.getElementById('jersey-container');
+      container.innerHTML = '';
+      JURUSAN_LIST.forEach((jur) => {
+        const item = document.createElement('div');
+        item.className = `jersey-item ${jur.id === selectedJurusan.id ? 'selected' : ''}`;
+        item.onclick = () => selectJersey(jur);
+        item.innerHTML = `
+          <div class="jersey-circle" style="background:${jur.color}; color:${jur.textDark ? '#2d3436' : '#ffffff'}; font-weight:900;">${jur.num}</div>
+          <span class="jersey-name">${jur.name}</span>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function selectJersey(jur) {
+      selectedJurusan = jur;
+      document.getElementById('selected-jersey-name').textContent = jur.full;
+      renderJerseyGrid();
+    }
+
+    function openJerseySelect(sport) {
+      selectedSport = sport;
+      document.getElementById('screen-menu').classList.add('hidden');
+      document.getElementById('screen-jersey').classList.remove('hidden');
+      renderJerseyGrid();
+    }
+
+    function confirmStartTournament() {
+      score = 0;
+      attempts = 0;
+      updateHUD();
+      document.getElementById('screen-jersey').classList.add('hidden');
+      document.getElementById('screen-gameover').classList.add('hidden');
+
+      Sound.init();
+      Sound.playWhistle();
+
+      currentGame = selectedSport;
+      if (selectedSport === 'moba') {
+        document.getElementById('hud-round-tag').textContent = '⚔️ MOBA ARENA';
+        document.getElementById('tutorial-hint').textContent = `⚔️ [${selectedJurusan.name}] Joystick kiri gerak, tombol kanan serang!`;
+        Moba.init();
+      } else if (selectedSport === 'soccer') {
+        document.getElementById('hud-round-tag').textContent = '⚽ PENALTI';
+        document.getElementById('tutorial-hint').textContent = `⚽ [${selectedJurusan.name}] Tarik bola & bobol gawang!`;
+        Soccer.init();
+      } else if (selectedSport === 'basket') {
+        document.getElementById('hud-round-tag').textContent = '🏀 BASKET';
+        document.getElementById('tutorial-hint').textContent = `🏀 [${selectedJurusan.name}] Tarik bola & bidik ring!`;
+        Basket.init();
+      } else if (selectedSport === 'pool') {
+        document.getElementById('hud-round-tag').textContent = '🎱 BILLIARD';
+        document.getElementById('tutorial-hint').textContent = `🎱 [${selectedJurusan.name}] Tarik stick dari bola putih & lepas!`;
+        Pool.init();
+      } else if (selectedSport === 'volley') {
+        document.getElementById('hud-round-tag').textContent = '🏐 BOLA VOLI';
+        document.getElementById('tutorial-hint').textContent = `🏐 [${selectedJurusan.name}] Tarik & smash bola melewati net!`;
+        Volley.init();
+      } else if (selectedSport === 'pingpong') {
+        document.getElementById('hud-round-tag').textContent = '🏓 TENIS MEJA';
+        document.getElementById('tutorial-hint').textContent = `🏓 [${selectedJurusan.name}] Geser jarimu untuk memukul bola!`;
+        PingPong.init();
+      } else if (selectedSport === 'softball') {
+        document.getElementById('hud-round-tag').textContent = '⚾ SOFTBALL';
+        document.getElementById('tutorial-hint').textContent = `⚾ [${selectedJurusan.name}] Tap layar atau pencet tombol AYUN BAT pas bal mlebu kotak kuning!`;
+        document.getElementById('softball-controls').classList.remove('hidden');
+        Softball.init();
+      }
+    }
+
+    function endMatch(title, totalScore, statDetail, sportKey) {
+      Sound.playWhistle(true);
+      document.getElementById('go-badge').textContent = `🏆 ${title} SELESAI`;
+      document.getElementById('go-final-score').textContent = totalScore;
+      document.getElementById('go-stat-detail').textContent = `${statDetail} • ${selectedJurusan.name}`;
+
+      const stored = getStoredData();
+      if (sportKey === 'moba') stored.mobaGold = true;
+      if (sportKey === 'soccer') stored.soccerGold = true;
+      if (sportKey === 'basket') stored.basketGold = true;
+      if (sportKey === 'pool') stored.poolGold = true;
+      if (sportKey === 'volley') stored.volleyGold = true;
+      if (sportKey === 'pingpong') stored.pingpongGold = true;
+      if (sportKey === 'softball') stored.softballGold = true;
+
+      if (totalScore > stored.highscore) {
+        stored.highscore = totalScore;
+        stored.bestJurusan = selectedJurusan.name;
+      }
+      saveStoredData(stored);
+
+      document.getElementById('screen-gameover').classList.remove('hidden');
+      document.getElementById('moba-controls').classList.add('hidden');
+      const sc = document.getElementById('softball-controls'); if (sc) sc.classList.add('hidden');
+      document.getElementById('softball-controls').classList.add('hidden');
+    }
+
+    function advanceOrRestart() {
+      confirmStartTournament();
+    }
+
+        function openTrophyRoom() {
+      const stored = getStoredData();
+      const setTrophy = (id, unlocked) => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('unlocked', !!unlocked);
+      };
+      setTrophy('trophy-moba-gold', stored.mobaGold);
+      setTrophy('trophy-soccer-gold', stored.soccerGold);
+      setTrophy('trophy-basket-gold', stored.basketGold);
+      setTrophy('trophy-pool-gold', stored.poolGold);
+      setTrophy('trophy-volley-gold', stored.volleyGold);
+      setTrophy('trophy-pingpong-gold', stored.pingpongGold);
+      setTrophy('trophy-softball-gold', stored.softballGold);
+
+      const elHigh = document.getElementById('trophy-highscore');
+      if (elHigh) elHigh.textContent = stored.highscore;
+      const elBest = document.getElementById('trophy-best-jurusan');
+      if (elBest) elBest.textContent = stored.bestJurusan ? `Jurusan Terbaik: ${stored.bestJurusan}` : 'Belum ada rekor';
+
+      document.getElementById('screen-menu').classList.add('hidden');
+      document.getElementById('screen-trophy').classList.remove('hidden');
+    }
+
+    function showMainMenu() {
+      currentGame = null;
+      document.getElementById('screen-menu').classList.remove('hidden');
+      document.getElementById('screen-jersey').classList.add('hidden');
+      document.getElementById('screen-trophy').classList.add('hidden');
+      document.getElementById('screen-gameover').classList.add('hidden');
+      document.getElementById('moba-controls').classList.add('hidden');
+      const sc = document.getElementById('softball-controls'); if (sc) sc.classList.add('hidden');
+      document.getElementById('softball-controls').classList.add('hidden');
+      document.getElementById('hud-round-tag').textContent = '🏆 SMKN 6 ARENA';
+    }
+
+    /* ==========================================================================
+       TOUCH & MOUSE & KEYBOARD CONTROLS (UNIFIED)
+       ========================================================================== */
+    function getCanvasCoords(e) {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return { x: clientX - rect.left, y: clientY - rect.top };
+    }
+
+    canvas.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      Sound.init();
+      const pos = getCanvasCoords(e);
+      if (currentGame === 'moba') {
+        // Virtual joystick if touched on left half
+        if (pos.x < W * 0.65) {
+          Moba.joystick.active = true;
+          Moba.joystick.baseX = pos.x;
+          Moba.joystick.baseY = pos.y;
+          Moba.joystick.curX = pos.x;
+          Moba.joystick.curY = pos.y;
+          Moba.joystick.vx = 0;
+          Moba.joystick.vy = 0;
+        }
+      } else if (currentGame === 'soccer') Soccer.onTouchStart(pos.x, pos.y);
+      else if (currentGame === 'basket') Basket.onTouchStart(pos.x, pos.y);
+      else if (currentGame === 'pool') Pool.onTouchStart(pos.x, pos.y);
+      else if (currentGame === 'volley') Volley.onTouchStart(pos.x, pos.y);
+      else if (currentGame === 'pingpong') PingPong.onTouchMove(pos.x, pos.y);
+      else if (currentGame === 'softball') Softball.onTouchMove(pos.x, pos.y);
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      const pos = getCanvasCoords(e);
+      if (currentGame === 'moba') {
+        if (Moba.joystick.active) {
+          Moba.joystick.curX = pos.x;
+          Moba.joystick.curY = pos.y;
+          const dx = pos.x - Moba.joystick.baseX;
+          const dy = pos.y - Moba.joystick.baseY;
+          const dist = Math.hypot(dx, dy);
+          if (dist > 0) {
+            Moba.joystick.vx = (dx / dist) * Math.min(dist / 35, 1);
+            Moba.joystick.vy = (dy / dist) * Math.min(dist / 35, 1);
+          }
+        }
+      } else if (currentGame === 'soccer') Soccer.onTouchMove(pos.x, pos.y);
+      else if (currentGame === 'basket') Basket.onTouchMove(pos.x, pos.y);
+      else if (currentGame === 'pool') Pool.onTouchMove(pos.x, pos.y);
+      else if (currentGame === 'volley') Volley.onTouchMove(pos.x, pos.y);
+      else if (currentGame === 'pingpong') PingPong.onTouchMove(pos.x, pos.y);
+      else if (currentGame === 'softball') Softball.onTouchMove(pos.x, pos.y);
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      if (currentGame === 'moba') {
+        Moba.joystick.active = false;
+        Moba.joystick.vx = 0;
+        Moba.joystick.vy = 0;
+      } else if (currentGame === 'soccer') Soccer.onTouchEnd();
+      else if (currentGame === 'basket') Basket.onTouchEnd();
+      else if (currentGame === 'pool') Pool.onTouchEnd();
+      else if (currentGame === 'volley') Volley.onTouchEnd();
+    }, { passive: false });
+
+    // MOBA BUTTON LISTENERS
+    document.getElementById('moba-btn-attack').addEventListener('click', (e) => {
+      e.stopPropagation();
+      Sound.init();
+      if (currentGame === 'moba') Moba.basicAttack();
+    });
+
+    document.getElementById('moba-btn-skill1').addEventListener('click', (e) => {
+      e.stopPropagation();
+      Sound.init();
+      if (currentGame === 'moba') Moba.skill1Dash();
+    });
+
+    document.getElementById('moba-btn-skill2').addEventListener('click', (e) => {
+      e.stopPropagation();
+      Sound.init();
+      if (currentGame === 'moba') Moba.skill2Ultimate();
+    });
+
+    // KEYBOARD SHORTCUTS FOR PC / CHROMEBOOK
+    window.addEventListener('keydown', (e) => {
+      if (currentGame === 'softball') {
+        if (e.code === 'Space' || e.code === 'Enter') Softball.swing();
+      }
+      if (currentGame === 'moba') {
+        if (e.key === 'w' || e.key === 'ArrowUp') { Moba.player.y -= Moba.player.speed; Moba.player.dirY = -1; Moba.player.dirX = 0; }
+        if (e.key === 's' || e.key === 'ArrowDown') { Moba.player.y += Moba.player.speed; Moba.player.dirY = 1; Moba.player.dirX = 0; }
+        if (e.key === 'a' || e.key === 'ArrowLeft') { Moba.player.x -= Moba.player.speed; Moba.player.dirX = -1; Moba.player.dirY = 0; }
+        if (e.key === 'd' || e.key === 'ArrowRight') { Moba.player.x += Moba.player.speed; Moba.player.dirX = 1; Moba.player.dirY = 0; }
+        if (e.key === ' ' || e.key === 'j') Moba.basicAttack();
+        if (e.key === 'k') Moba.skill1Dash();
+        if (e.key === 'l') Moba.skill2Ultimate();
+      }
+    });
+
+    // Mouse Controls fallback
+    canvas.addEventListener('mousedown', (e) => {
+      Sound.init();
+      const pos = getCanvasCoords(e);
+      if (currentGame === 'moba') {
+        if (pos.x < W * 0.65) {
+          Moba.joystick.active = true;
+          Moba.joystick.baseX = pos.x; Moba.joystick.baseY = pos.y;
+          Moba.joystick.curX = pos.x; Moba.joystick.curY = pos.y;
+        }
+      } else if (currentGame === 'soccer') Soccer.onTouchStart(pos.x, pos.y);
+      else if (currentGame === 'basket') Basket.onTouchStart(pos.x, pos.y);
+      else if (currentGame === 'pool') Pool.onTouchStart(pos.x, pos.y);
+      else if (currentGame === 'volley') Volley.onTouchStart(pos.x, pos.y);
+      else if (currentGame === 'pingpong') PingPong.onTouchMove(pos.x, pos.y);
+      else if (currentGame === 'softball') Softball.onTouchMove(pos.x, pos.y);
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      const pos = getCanvasCoords(e);
+      if (currentGame === 'moba') {
+        if (Moba.joystick.active) {
+          Moba.joystick.curX = pos.x; Moba.joystick.curY = pos.y;
+          const dx = pos.x - Moba.joystick.baseX, dy = pos.y - Moba.joystick.baseY;
+          const dist = Math.hypot(dx, dy);
+          if (dist > 0) {
+            Moba.joystick.vx = (dx / dist) * Math.min(dist / 35, 1);
+            Moba.joystick.vy = (dy / dist) * Math.min(dist / 35, 1);
+          }
+        }
+      } else if (currentGame === 'soccer') Soccer.onTouchMove(pos.x, pos.y);
+      else if (currentGame === 'basket') Basket.onTouchMove(pos.x, pos.y);
+      else if (currentGame === 'pool') Pool.onTouchMove(pos.x, pos.y);
+      else if (currentGame === 'volley') Volley.onTouchMove(pos.x, pos.y);
+      else if (currentGame === 'pingpong') PingPong.onTouchMove(pos.x, pos.y);
+      else if (currentGame === 'softball') Softball.onTouchMove(pos.x, pos.y);
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (currentGame === 'moba') { Moba.joystick.active = false; Moba.joystick.vx = 0; Moba.joystick.vy = 0; }
+      else if (currentGame === 'soccer') Soccer.onTouchEnd();
+      else if (currentGame === 'basket') Basket.onTouchEnd();
+      else if (currentGame === 'pool') Pool.onTouchEnd();
+      else if (currentGame === 'volley') Volley.onTouchEnd();
+    });
+
+    document.getElementById('btn-back-menu').addEventListener('click', showMainMenu);
+
+    const btnSound = document.getElementById('btn-sound');
+    btnSound.addEventListener('click', () => {
+      Sound.enabled = !Sound.enabled;
+      btnSound.textContent = Sound.enabled ? '🔊' : '🔇';
+    });
+  </script>
+</body>
+</html>
